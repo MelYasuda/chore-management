@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
  
 const SECTIONS = [
@@ -31,6 +31,61 @@ const SECTIONS = [
       }
     ],
   },
+  {
+    title: "Tuesday", 
+    data: [
+      {
+        desc: "Clean",
+        assignedName: "Meguru",
+        priority: "High",
+        note: "Do it"
+      }
+    ],
+  },
+  {
+    title: "Wednesday", 
+    data: [
+      {
+        desc: "Cook Dinner",
+        assignedName: "Meguru",
+        priority: "High",
+        note: "Make it yummy"
+      }
+    ],
+  },
+  {
+    title: "Thursday", 
+    data: [
+      {
+        desc: "Cook Dinner",
+        assignedName: "Meguru",
+        priority: "High",
+        note: "Make it yummy"
+      }
+    ],
+  },
+  {
+    title: "Friday", 
+    data: [
+      {
+        desc: "Cook Dinner",
+        assignedName: "Meguru",
+        priority: "High",
+        note: "Make it yummy"
+      }
+    ],
+  },
+  {
+    title: "Saturday", 
+    data: [
+      {
+        desc: "Cook Dinner",
+        assignedName: "Meguru",
+        priority: "High",
+        note: "Make it yummy"
+      }
+    ],
+  },
 ]
  
 export default class Chores extends React.Component {
@@ -49,7 +104,7 @@ export default class Chores extends React.Component {
   _renderContent = section => {
     return (
       <View >
-        <Text>{section.data.map( data => data.desc + data.assignedName )}</Text>
+        <FlatList data={section.data} renderItem={({item}) => <Text>{item.desc} {item.assignedName}</Text>} />
       </View>
     );
   };
