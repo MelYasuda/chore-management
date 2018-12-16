@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
+import { Header } from "react-native-elements";
+
  
 const SECTIONS = [
   {
@@ -95,16 +97,33 @@ export default class Chores extends React.Component {
   
   _renderHeader = section => {
     return (
-      <View >
-        <Text>{section.title}</Text>
+      <View style={{
+              backgroundColor: 'rgb(77,120, 140)',
+          }}>
+        <Text style={{ fontSize: 20,
+                  fontWeight: 'bold',
+                  margin: 20}}>{section.title}</Text>
       </View>
     );
   };
  
   _renderContent = section => {
     return (
-      <View >
-        <FlatList data={section.data} renderItem={({item}) => <Text>{item.desc} {item.assignedName}</Text>} />
+      <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                backgroundColor: 'rgb(98, 197, 184)'
+            }}>
+        <FlatList data={section.data} keyExtractor={(item, index) => index.toString()}
+ renderItem={({item}) => <Text style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: 'rgb(173, 252, 250)',
+                    marginLeft: 20,
+                    marginRight: 10,
+                    paddingBottom: 10,
+                    paddingTop: 10
+                }}>{item.desc} {item.assignedName}</Text>} />
       </View>
     );
   };
@@ -116,6 +135,9 @@ export default class Chores extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <Header
+              centerComponent={{ text: "Chores", style: { color: "#fff" } }}
+            />
       <Accordion
         sections={SECTIONS}
         activeSections={this.state.activeSections}
@@ -130,7 +152,8 @@ export default class Chores extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 100,
-    flex: 1
+    flex: 1,
+    backgroundColor: "#fff",
+    width: '100%'
   }
 });
