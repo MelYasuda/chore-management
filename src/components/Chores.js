@@ -1,0 +1,96 @@
+import React from "react";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
+import Accordion from "react-native-collapsible/Accordion";
+import { Header } from "react-native-elements";
+
+export default class Chores extends React.Component {
+  state = {
+    activeSections: []
+  };
+
+  _renderHeader = section => {
+    return (
+      <View
+        style={{
+          backgroundColor: "rgb(77,120, 140)"
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
+          {section.title}
+        </Text>
+      </View>
+    );
+  };
+
+  _renderContent = section => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          backgroundColor: "rgb(98, 197, 184)"
+        }}
+      >
+        <FlatList
+          data={section.data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                color: "rgb(173, 252, 250)",
+                marginLeft: 20,
+                marginRight: 10,
+                paddingBottom: 10,
+                paddingTop: 10
+              }}
+            >
+              {item.desc} {item.assignedName}
+            </Text>
+          )}
+        />
+      </View>
+    );
+  };
+
+  _updateSections = activeSections => {
+    this.setState({ activeSections });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Header
+          centerComponent={{
+            text: "Chores",
+            style: {
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: 25,
+              marginTop: 22,
+              paddingBottom: 23
+            }
+          }}
+        />
+        <ScrollView style={{flex: 1}}>
+          <Accordion
+            sections={SECTIONS}
+            activeSections={this.state.activeSections}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            onChange={this._updateSections}
+          />
+        </ScrollView>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "rgb(77,120, 140)",
+    width: "100%"
+  }
+});

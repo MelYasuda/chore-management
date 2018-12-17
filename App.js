@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Chores from './components/Chores.js';
+import Chores from './src/components/Chores.js';
 
 export default class App extends React.Component {
   render() {
