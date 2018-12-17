@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
 import { Header } from "react-native-elements";
 
@@ -177,6 +177,7 @@ export default class Chores extends React.Component {
             }
           }}
         />
+        <ScrollView style={{flex: 1}}>
         <Accordion
           sections={SECTIONS}
           activeSections={this.state.activeSections}
@@ -184,6 +185,7 @@ export default class Chores extends React.Component {
           renderContent={this._renderContent}
           onChange={this._updateSections}
         />
+        </ScrollView>
       </View>
     );
   }
@@ -192,7 +194,7 @@ export default class Chores extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(77,120, 140)",
     width: "100%"
   }
 });
