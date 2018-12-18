@@ -36,19 +36,20 @@ class Chores extends React.Component {
           data={section.data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "rgb(173, 252, 250)",
-                marginLeft: 20,
-                marginRight: 10,
-                paddingBottom: 10,
-                paddingTop: 10
-              }}
-            >
-              {item.desc} {item.assignedName}
-            </Text>
+              <Text
+              onPress={() => this.props.navigation.navigate('Details')}
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  color: "rgb(173, 252, 250)",
+                  marginLeft: 20,
+                  marginRight: 10,
+                  paddingBottom: 10,
+                  paddingTop: 10
+                }}
+              >
+                {item.desc} {item.assignedName}
+              </Text>
           )}
         />
       </View>
