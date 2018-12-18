@@ -2,8 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
 import { Header } from "react-native-elements";
+import { connect } from "react-redux";
 
-export default class Chores extends React.Component {
+class Chores extends React.Component {
   state = {
     activeSections: []
   };
@@ -12,7 +13,7 @@ export default class Chores extends React.Component {
     return (
       <View
         style={{
-          backgroundColor: "rgb(77,120, 140)"
+          backgroundColor: "rgb(77,120, 140)",
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
@@ -75,7 +76,7 @@ export default class Chores extends React.Component {
         />
         <ScrollView style={{flex: 1}}>
           <Accordion
-            sections={SECTIONS}
+            sections={this.props.chores.chores}
             activeSections={this.state.activeSections}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}
@@ -94,3 +95,12 @@ const styles = StyleSheet.create({
     width: "100%"
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    chores: state,
+  };
+};
+
+
+export default connect(mapStateToProps)(Chores);

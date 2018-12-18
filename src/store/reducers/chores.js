@@ -1,3 +1,8 @@
+import {
+  ADD_CHORES,
+  DELETE_CHORES,
+} from "../actions/actionTypes";
+
 const initialState = [
   {
     title: "Sunday",
@@ -102,8 +107,12 @@ const initialState = [
   }
 ];
 
-const reducer = {state = initialState, action} => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_CHORES:
+      return state;
+    case DELETE_CHORES:
+    return state;
     default:
       return state;
   }
