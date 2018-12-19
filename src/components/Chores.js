@@ -5,6 +5,10 @@ import { Header } from "react-native-elements";
 import { connect } from "react-redux";
 
 class Chores extends React.Component {
+  static navigationOptions = {
+    title: 'Chores',
+  };
+
   state = {
     activeSections: []
   };
@@ -35,9 +39,12 @@ class Chores extends React.Component {
         <FlatList
           data={section.data}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
               <Text
-              onPress={() => this.props.navigation.navigate('Details')}
+              onPress={() => this.props.navigation.navigate('Details', {
+                itemId: index,
+                categoryId: item.categoryId
+              })}
                 style={{
                   fontSize: 18,
                   fontWeight: "bold",
@@ -63,7 +70,7 @@ class Chores extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header
+        {/* <Header
           centerComponent={{
             text: "Chores",
             style: {
@@ -74,7 +81,7 @@ class Chores extends React.Component {
               paddingBottom: 23
             }
           }}
-        />
+        /> */}
         <ScrollView style={{flex: 1}}>
           <Accordion
             sections={this.props.chores.chores}

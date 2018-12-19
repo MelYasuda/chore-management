@@ -11,13 +11,15 @@ const initialState = [
         desc: "Laundry",
         assignedName: "Meguru",
         priority: "High",
-        note: "Use dry sheet"
+        note: "Use dry sheet",
+        categoryId: 0
       },
       {
         desc: "Doing the dishes",
         assignedName: "Elton",
         priority: "Medium",
-        note: "Use pods"
+        note: "Use pods",
+        categoryId: 0
       }
     ]
   },
@@ -25,22 +27,25 @@ const initialState = [
     title: "Monday",
     data: [
       {
-        desc: "Cook Dinner",
+        desc: "Grocery Shopping",
         assignedName: "Meguru",
         priority: "High",
-        note: "Make it yummy"
+        note: "Make it yummy",
+        categoryId: 1
       },
       {
-        desc: "Laundry",
+        desc: "Take down xmas tree",
         assignedName: "Meguru",
         priority: "High",
-        note: "Use dry sheet"
+        note: "Use dry sheet",
+        categoryId: 1
       },
       {
-        desc: "Doing the dishes",
+        desc: "Put away xmas stuff",
         assignedName: "Elton",
         priority: "Medium",
-        note: "Use pods"
+        note: "Use pods",
+        categoryId: 1
       }
     ]
   },
@@ -48,16 +53,18 @@ const initialState = [
     title: "Tuesday",
     data: [
       {
-        desc: "Clean",
+        desc: "Clean bathroom",
         assignedName: "Meguru",
-        priority: "High",
-        note: "Do it"
+        priority: "Low",
+        note: "Do it",
+        categoryId: 2
       },
       {
-        desc: "Laundry",
-        assignedName: "Meguru",
+        desc: "Throw away expired stuff",
+        assignedName: "Elton",
         priority: "High",
-        note: "Use dry sheet"
+        note: "Use dry sheet",
+        categoryId: 2
       }
     ]
   },
@@ -65,10 +72,11 @@ const initialState = [
     title: "Wednesday",
     data: [
       {
-        desc: "Cook Dinner",
+        desc: "Pay bills",
         assignedName: "Meguru",
-        priority: "High",
-        note: "Make it yummy"
+        priority: "Low",
+        note: "Make it yummy",
+        categoryId: 3
       }
     ]
   },
@@ -76,10 +84,11 @@ const initialState = [
     title: "Thursday",
     data: [
       {
-        desc: "Cook Dinner",
+        desc: "Vacuum",
         assignedName: "Meguru",
-        priority: "High",
-        note: "Make it yummy"
+        priority: "Medium",
+        note: "Make it yummy",
+        categoryId: 4
       }
     ]
   },
@@ -87,10 +96,11 @@ const initialState = [
     title: "Friday",
     data: [
       {
-        desc: "Cook Dinner",
+        desc: "Dust",
         assignedName: "Meguru",
         priority: "High",
-        note: "Make it yummy"
+        note: "Make it yummy",
+        categoryId: 5
       }
     ]
   },
@@ -98,10 +108,11 @@ const initialState = [
     title: "Saturday",
     data: [
       {
-        desc: "Cook Dinner",
+        desc: "Meal prep",
         assignedName: "Meguru",
-        priority: "High",
-        note: "Make it yummy"
+        priority: "Low",
+        note: "Make it yummy",
+        categoryId: 6
       }
     ]
   }
