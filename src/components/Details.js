@@ -3,8 +3,16 @@ import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import { connect } from "react-redux";
 
 class Details extends React.Component {
-  static navigationOptions = {
-    title: 'Chore Detail',
+  static navigationOptions = 
+  
+  
+  // ({ navigation } = this.props ) => {
+  //   const itemId = navigation.getParam('itemId', 'NO-ID');
+  //   const categoryId = navigation.getParam('categoryId', 'NO-ID');
+  //   return {
+  //     title: this.props.chores.chores[categoryId].data[itemId].desc
+  //   }
+   { title: 'Chore Detail',
     headerStyle: {
       backgroundColor: '#4f63d6',
     },
