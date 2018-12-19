@@ -5,6 +5,14 @@ import { connect } from "react-redux";
 class Details extends React.Component {
   static navigationOptions = {
     title: 'Chore Detail',
+    headerStyle: {
+      backgroundColor: '#4f63d6',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 25
+    }
   };
 
   render() {

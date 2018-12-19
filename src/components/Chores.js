@@ -7,6 +7,14 @@ import { connect } from "react-redux";
 class Chores extends React.Component {
   static navigationOptions = {
     title: 'Chores',
+    headerStyle: {
+      backgroundColor: '#4f63d6',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 25
+    }
   };
 
   state = {
@@ -70,18 +78,6 @@ class Chores extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Header
-          centerComponent={{
-            text: "Chores",
-            style: {
-              color: "#fff",
-              fontWeight: "bold",
-              fontSize: 25,
-              marginTop: 22,
-              paddingBottom: 23
-            }
-          }}
-        /> */}
         <ScrollView style={{flex: 1}}>
           <Accordion
             sections={this.props.chores.chores}
