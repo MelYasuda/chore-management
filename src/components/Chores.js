@@ -102,7 +102,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({tintColor})=>(
         <Icon name="ios-list" color={tintColor} size={30}/>
-      )} 
+      )},
     },
   Create: { screen: Create,
     navigationOptions: {
@@ -112,7 +112,8 @@ const TabNavigator = createMaterialBottomTabNavigator({
 },
 {
   initialRouteName: "Chores",
-  barStyle: { backgroundColor: '#4f63d6' }
+  barStyle: { backgroundColor: '#4f63d6' },
+  labeled: false
 }
 );
 
