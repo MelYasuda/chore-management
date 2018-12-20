@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
-import { Header } from "react-native-elements";
 import { connect } from "react-redux";
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import Create from './Create.js';
 
 class Chores extends React.Component {
   static navigationOptions = {
@@ -106,5 +107,11 @@ const mapStateToProps = state => {
   };
 };
 
-
-export default connect(mapStateToProps)(Chores);
+export default createMaterialBottomTabNavigator({
+  Chores: { screen: connect(mapStateToProps)(Chores) },
+  Create: { screen: Create },
+},
+{
+  initialRouteName: "Chores"
+}
+);
