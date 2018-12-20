@@ -4,6 +4,7 @@ import Accordion from "react-native-collapsible/Accordion";
 import { connect } from "react-redux";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Create from './Create.js';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class Chores extends React.Component {
 
@@ -15,7 +16,7 @@ class Chores extends React.Component {
     return (
       <View
         style={{
-          backgroundColor: "rgb(77,120, 140)",
+          backgroundColor: "rgb(77,120, 140)"
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
@@ -97,18 +98,27 @@ const mapStateToProps = state => {
 };
 
 const TabNavigator = createMaterialBottomTabNavigator({
-  Chores: { screen: connect(mapStateToProps)(Chores) },
-  Create: { screen: Create },
+  Chores: { screen: connect(mapStateToProps)(Chores),
+    navigationOptions: {
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="ios-list" color={tintColor} size={30}/>
+      )} 
+    },
+  Create: { screen: Create,
+    navigationOptions: {
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-add" color={tintColor} size={30}/>
+      )} },
 },
 {
   initialRouteName: "Chores",
+  barStyle: { backgroundColor: '#4f63d6' }
 }
 );
 
 TabNavigator.navigationOptions = ({ navigation }) => {
   const { routeName } = navigation.state.routes[navigation.state.index];
 
-  // You can do whatever you like here to pick the title based on the route name
   const headerTitle = routeName;
   const headerStyle = {
     backgroundColor: '#4f63d6',
