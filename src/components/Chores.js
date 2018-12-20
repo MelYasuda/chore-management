@@ -6,17 +6,6 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Create from './Create.js';
 
 class Chores extends React.Component {
-  static navigationOptions = {
-    title: 'Chores',
-    headerStyle: {
-      backgroundColor: '#4f63d6',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 25
-    }
-  };
 
   state = {
     activeSections: []
@@ -107,11 +96,35 @@ const mapStateToProps = state => {
   };
 };
 
-export default createMaterialBottomTabNavigator({
+const TabNavigator = createMaterialBottomTabNavigator({
   Chores: { screen: connect(mapStateToProps)(Chores) },
   Create: { screen: Create },
 },
 {
-  initialRouteName: "Chores"
+  initialRouteName: "Chores",
 }
 );
+
+TabNavigator.navigationOptions = ({ navigation }) => {
+  const { routeName } = navigation.state.routes[navigation.state.index];
+
+  // You can do whatever you like here to pick the title based on the route name
+  const headerTitle = routeName;
+  const headerStyle = {
+    backgroundColor: '#4f63d6',
+  }
+  const headerTintColor = '#fff'
+  const headerTitleStyle = {
+    fontWeight: 'bold',
+    fontSize: 25,
+  }
+
+  return {
+    headerTitle,
+    headerStyle,
+    headerTintColor,
+    headerTitleStyle
+  };
+};
+
+export default TabNavigator;
