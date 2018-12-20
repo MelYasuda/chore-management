@@ -19,6 +19,7 @@ class Chores extends React.Component {
           backgroundColor: "rgb(77,120, 140)"
         }}
       >
+      {/* <Icon name={this.state.isCollapsed==true?"ios-arrow-forward":"ios-arrow-down"} size={30}/> */}
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
           {section.title}
         </Text>
