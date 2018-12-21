@@ -9,18 +9,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class Chores extends React.Component {
 
   state = {
-    activeSections: []
+    activeSections: [],
   };
 
-  _renderHeader = section => {
+  _renderHeader = (section, index) => {
     return (
       <View
         style={{
           backgroundColor: "rgb(77,120, 140)"
         }}
       >
-      {/* <Icon name={this.state.isCollapsed==true?"ios-arrow-forward":"ios-arrow-down"} size={30}/> */}
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
+          <Icon name={ this.state.activeSections[0] === index ? "ios-arrow-down" : "ios-arrow-forward" } size={30}/>
           {section.title}
         </Text>
       </View>
@@ -68,6 +68,7 @@ class Chores extends React.Component {
   };
 
   render() {
+    console.log(this.state.activeSections);
     return (
       <View style={styles.container}>
         <ScrollView style={{flex: 1}}>
