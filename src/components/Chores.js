@@ -16,13 +16,14 @@ class Chores extends React.Component {
     return (
       <View
         style={{
-          backgroundColor: "rgb(77,120, 140)"
+          backgroundColor: "rgb(77,120, 140)",
+          flex: 1, flexDirection: 'row'
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
-          <Icon name={ this.state.activeSections[0] === index ? "ios-arrow-down" : "ios-arrow-forward" } size={30}/>
           {section.title}
         </Text>
+        <Icon style={{ marginTop: 12, right: 20, position: "absolute",  }} name={ this.state.activeSections[0] === index ? "ios-arrow-down" : "ios-arrow-up" } size={30}/>
       </View>
     );
   };
@@ -68,7 +69,6 @@ class Chores extends React.Component {
   };
 
   render() {
-    console.log(this.state.activeSections);
     return (
       <View style={styles.container}>
         <ScrollView style={{flex: 1}}>
