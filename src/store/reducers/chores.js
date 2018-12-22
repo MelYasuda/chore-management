@@ -3,7 +3,17 @@ import {
   DELETE_CHORES,
 } from "../actions/actionTypes";
 
-const initialState = [
+const initialState = {
+  categoryList: {
+    "Sunday":0,
+    "Monday":1,
+    "Tuesday":2,
+    "Wednesday":3,
+    "Thursday":4,
+    "Friday":5,
+    "Saturday":6
+  },
+  choreList: [
   {
     title: "Sunday",
     data: [
@@ -116,7 +126,8 @@ const initialState = [
       }
     ]
   }
-];
+]
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

@@ -4,14 +4,6 @@ import { connect } from "react-redux";
 
 class Details extends React.Component {
   static navigationOptions = 
-  
-  
-  // ({ navigation } = this.props ) => {
-  //   const itemId = navigation.getParam('itemId', 'NO-ID');
-  //   const categoryId = navigation.getParam('categoryId', 'NO-ID');
-  //   return {
-  //     title: this.props.chores.chores[categoryId].data[itemId].desc
-  //   }
    { title: 'Chore Detail',
     headerStyle: {
       backgroundColor: '#4f63d6',
@@ -32,7 +24,7 @@ class Details extends React.Component {
     return(
       <View>
         <Text>
-          {this.props.chores.chores[categoryId].data[itemId].desc}
+          {this.props.chores[categoryId].data[itemId].desc}
         </Text>
       </View>
     );
@@ -41,7 +33,7 @@ class Details extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    chores: state,
+    chores: state.chores.choreList,
   };
 };
 

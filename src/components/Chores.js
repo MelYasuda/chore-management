@@ -7,7 +7,6 @@ import Create from './Create.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class Chores extends React.Component {
-
   state = {
     activeSections: [],
   };
@@ -20,10 +19,10 @@ class Chores extends React.Component {
           flex: 1, flexDirection: 'row'
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: "bold", margin: 20 }}>
+        <Text style={{ color: '#fff', fontSize: 20, fontWeight: "bold", margin: 20 }}>
           {section.title}
         </Text>
-        <Icon style={{ marginTop: 12, right: 20, position: "absolute",  }} name={ this.state.activeSections[0] === index ? "ios-arrow-down" : "ios-arrow-up" } size={30}/>
+        <Icon style={{ color: '#fff', marginTop: 12, right: 20, position: "absolute",  }} name={ this.state.activeSections[0] === index ? "ios-arrow-down" : "ios-arrow-up" } size={30}/>
       </View>
     );
   };
@@ -69,11 +68,12 @@ class Chores extends React.Component {
   };
 
   render() {
+    // console.log(this.props);
     return (
       <View style={styles.container}>
         <ScrollView style={{flex: 1}}>
           <Accordion
-            sections={this.props.chores.chores}
+            sections={this.props.chores}
             activeSections={this.state.activeSections}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}
@@ -94,8 +94,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
-    chores: state,
+    chores: state.chores.choreList,
   };
 };
 
