@@ -1,22 +1,73 @@
-import React from "react";
-import { Text, View, FlatList } from "react-native";
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import React from 'react';
+import { StyleSheet, Text, View, Alert } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import CreateFormInput from './CreateFormInput';
 
 export default class Create extends React.Component {
+  _handleSubmit = values => {
+    Alert.alert(JSON.stringify(values))
+  }
+
   render(){
     return(
-      <View>
-        <FormLabel>Chore description</FormLabel>
-        <FormInput/>
-        <FormLabel>Assigned to</FormLabel>
-        <FormInput/>
-        <FormLabel>Priority</FormLabel>
-        <FormInput/>
-        <FormLabel>Notes</FormLabel>
-        <FormInput/>
-        <Button
-        title='ADD' />
+      <View style={styles.container}>
+        <Formik 
+        initialValues={{ desc: '', assignedName: '', priority: '', note: '' }}
+        onSubmit={this._handleSubmit}
+        render={({
+          values,
+          handleSubmit,
+          setFieldValue
+          }) => (
+            <React.Fragment>
+              <CreateFormInput
+                label='Chore Description'
+                value={values.desc}
+                onChange={setFieldValue}
+                name='desc'
+                />
+              <CreateFormInput
+                label='Assigned to'
+                value={values.assignedName}
+                onChange={setFieldValue}
+                name='assignedName'
+                />
+              <CreateFormInput 
+                label='Priority'
+                value={values.priority}
+                onChange={setFieldValue}
+                name='priority'
+                />
+              <CreateFormInput 
+                label='Note'
+                value={values.note}
+                onChange={setFieldValue}
+                name='note'
+                />
+              <Button
+              buttonStyle={styles.button}
+              title="Submit"
+              onPress={handleSubmit}
+            />
+            </React.Fragment>
+          )}
+        />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    marginTop: 20,
+    width: '100%',
+  },
+});
