@@ -7,14 +7,14 @@ import CreateFormInput from './CreateFormInput';
 
 export default class Create extends React.Component {
   _handleSubmit = values => {
-    Alert.alert(JSON.stringify(values))
+    console.log(JSON.stringify(values))
   }
 
   render(){
     return(
       <View style={styles.container}>
         <Formik 
-        initialValues={{ desc: '', assignedName: '', priority: '', note: '' }}
+        initialValues={{ desc: '', assignedName: '', priority: '', note: '', day: '' }}
         onSubmit={this._handleSubmit}
         render={({
           values,
@@ -41,11 +41,17 @@ export default class Create extends React.Component {
                 name='priority'
                 />
               <CreateFormInput 
-                label='Note'
-                value={values.note}
+                label='Day'
+                value={values.day}
                 onChange={setFieldValue}
-                name='note'
+                name='day'
                 />
+              <CreateFormInput 
+              label='Note'
+              value={values.note}
+              onChange={setFieldValue}
+              name='note'
+              />
               <Button
               buttonStyle={styles.button}
               title="Submit"
