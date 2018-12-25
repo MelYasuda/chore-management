@@ -68,7 +68,6 @@ class Chores extends React.Component {
   };
 
   render() {
-    // console.log(this.props);
     return (
       <View style={styles.container}>
         <ScrollView style={{flex: 1}}>

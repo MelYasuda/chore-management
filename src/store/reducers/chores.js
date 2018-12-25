@@ -130,9 +130,22 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
+  let newState;
+  const { choreDesc, assignedName, priority, note, categoryId } = action;
   switch (action.type) {
     case ADD_CHORES:
-      return state;
+    newState = state;
+    newState.choreList[categoryId].data.push(
+      {
+        desc: choreDesc,
+        assignedName: assignedName,
+        priority: priority,
+        note: note,
+        categoryId: categoryId
+      }
+    );
+    console.log(newState);
+      return newState;
     case DELETE_CHORES:
     return state;
     default:

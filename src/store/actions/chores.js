@@ -1,9 +1,13 @@
 import { ADD_CHORE, DELETE_CHORE } from './actionTypes';
 
-export const addChore = (choreName) => {
+export const addChore = (choreDesc, assignedName, priority, note, categoryId) => {
     return {
         type: ADD_CHORE,
-        placeName: choreName
+        choreDesc: choreDesc,
+        assignedName: assignedName,
+        priority: priority,
+        note: note,
+        categoryId: categoryId
     };
 };
 

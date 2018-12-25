@@ -4,17 +4,28 @@ import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CreateFormInput from './CreateFormInput';
+import { connect } from 'react-redux';
 
-export default class Create extends React.Component {
+class Create extends React.Component {
   _handleSubmit = values => {
-    console.log(JSON.stringify(values))
+    const { dispatch } = this.props;
+    const { desc, assignedName, priority, note, categoryId } = values;
+    const action = {
+      type: 'ADD_CHORES',
+      desc: desc,
+      assignedName: assignedName,
+      priority: priority,
+      note: note,
+      categoryId: categoryId
+    }
+    dispatch(action);
   }
 
   render(){
     return(
       <View style={styles.container}>
         <Formik 
-        initialValues={{ desc: '', assignedName: '', priority: '', note: '', day: '' }}
+        initialValues={{ desc: '', assignedName: '', priority: '', note: '', categoryId: 0 }}
         onSubmit={this._handleSubmit}
         render={({
           values,
@@ -39,12 +50,6 @@ export default class Create extends React.Component {
                 value={values.priority}
                 onChange={setFieldValue}
                 name='priority'
-                />
-              <CreateFormInput 
-                label='Day'
-                value={values.day}
-                onChange={setFieldValue}
-                name='day'
                 />
               <CreateFormInput 
               label='Note'
@@ -77,3 +82,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default connect()(Create); 
