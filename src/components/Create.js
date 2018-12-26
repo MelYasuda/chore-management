@@ -4,10 +4,11 @@ import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CreateFormInput from './CreateFormInput';
+import DropdownChoice from './DropDown';
 import { connect } from 'react-redux';
 
 class Create extends React.Component {
-  _handleSubmit = values => {
+  _handleSubmit = (values) => {
     const { dispatch } = this.props;
     const { desc, assignedName, priority, note, categoryId } = values;
     const action = {
@@ -30,7 +31,7 @@ class Create extends React.Component {
         render={({
           values,
           handleSubmit,
-          setFieldValue
+          setFieldValue,
           }) => (
             <React.Fragment>
               <CreateFormInput
@@ -45,6 +46,7 @@ class Create extends React.Component {
                 onChange={setFieldValue}
                 name='assignedName'
                 />
+              <DropdownChoice />
               <CreateFormInput 
                 label='Priority'
                 value={values.priority}
