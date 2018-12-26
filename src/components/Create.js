@@ -46,7 +46,11 @@ class Create extends React.Component {
                 onChange={setFieldValue}
                 name='assignedName'
                 />
-              <DropdownChoice />
+              <DropdownChoice
+                value={values.categoryId}
+                onChange={setFieldValue}
+                name='categoryId'
+               />
               <CreateFormInput 
                 label='Priority'
                 value={values.priority}

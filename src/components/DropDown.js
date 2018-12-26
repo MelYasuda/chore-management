@@ -4,29 +4,42 @@ import { Dropdown } from "react-native-material-dropdown";
 
 
 export default class DropdownChoice extends React.Component {
+  _handleChange = value => {
+    this.props.onChange(this.props.name, value);
+  };
+
   render(){
     let data = [{
-      value: 'Sunday',
+      value: 0,
+      label: "Sunday"
     }, {
-      value: 'Monday',
+      value: 1,
+      label: "Monday"
     }, {
-      value: 'Tuesday',
+      value: 2,
+      label: "Tuesday"
     }, {
-      value: 'Wednesday',
+      value: 3,
+      label: "Wednesday"
     }, {
-      value: 'Thursday',
+      value: 4,
+      label: "Thursday"
     }, {
-      value: 'Friday',
+      value: 5,
+      label: "Friday"
     }, {
-      value: 'Saturday',
+      value: 6,
+      label: "Saturday"
     }, ];
 
     const { label, ...rest } = this.props;
     return(
       <View style={styles.root}>
         <Dropdown
-          label='Due on'
+          label='Choose Day'
           data={data}
+          onChangeText={this._handleChange}
+          {...rest}
         />
       </View>
     );
