@@ -9,34 +9,12 @@ export default class DropdownChoice extends React.Component {
   };
 
   render(){
-    let data = [{
-      value: 0,
-      label: "Sunday"
-    }, {
-      value: 1,
-      label: "Monday"
-    }, {
-      value: 2,
-      label: "Tuesday"
-    }, {
-      value: 3,
-      label: "Wednesday"
-    }, {
-      value: 4,
-      label: "Thursday"
-    }, {
-      value: 5,
-      label: "Friday"
-    }, {
-      value: 6,
-      label: "Saturday"
-    }, ];
 
-    const { label, ...rest } = this.props;
+    const { label, data, ...rest } = this.props;
     return(
       <View style={styles.root}>
         <Dropdown
-          label='Choose Day'
+          label={label}
           data={data}
           onChangeText={this._handleChange}
           {...rest}

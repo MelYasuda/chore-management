@@ -144,7 +144,8 @@ const reducer = (state = initialState, action) => {
         categoryId: categoryId
       }
     );
-      return newState;
+    console.log(newState);
+    return newState;
     case DELETE_CHORES:
     return state;
     default:

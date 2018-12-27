@@ -22,7 +22,40 @@ class Create extends React.Component {
     dispatch(action);
   }
 
+  dayData = [{
+    value: 0,
+    label: "Sunday"
+  }, {
+    value: 1,
+    label: "Monday"
+  }, {
+    value: 2,
+    label: "Tuesday"
+  }, {
+    value: 3,
+    label: "Wednesday"
+  }, {
+    value: 4,
+    label: "Thursday"
+  }, {
+    value: 5,
+    label: "Friday"
+  }, {
+    value: 6,
+    label: "Saturday"
+  }, ];
+
+  priorityData = [{
+    value: "High"
+  }, {
+    value: "Medium"
+  }, {
+    value: "Low"
+  }
+];
+
   render(){
+
     return(
       <View style={styles.container}>
         <Formik 
@@ -47,16 +80,19 @@ class Create extends React.Component {
                 name='assignedName'
                 />
               <DropdownChoice
+                label='Choose Day'
+                data={this.dayData}
                 value={values.categoryId}
                 onChange={setFieldValue}
                 name='categoryId'
                />
-              <CreateFormInput 
-                label='Priority'
+               <DropdownChoice
+                label='Prioriy'
+                data={this.priorityData}
                 value={values.priority}
                 onChange={setFieldValue}
                 name='priority'
-                />
+               />
               <CreateFormInput 
               label='Note'
               value={values.note}
