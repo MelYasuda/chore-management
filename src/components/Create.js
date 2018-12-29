@@ -54,6 +54,12 @@ class Create extends React.Component {
   }
 ];
 
+  assignedNameData = [{
+    value: "Meguru"
+  },{
+    value: "Elton"
+  }]
+
   render(){
 
     return(
@@ -73,18 +79,19 @@ class Create extends React.Component {
                 onChange={setFieldValue}
                 name='desc'
                 />
-              <CreateFormInput
-                label='Assigned to'
-                value={values.assignedName}
-                onChange={setFieldValue}
-                name='assignedName'
-                />
               <DropdownChoice
                 label='Choose Day'
                 data={this.dayData}
                 value={values.categoryId}
                 onChange={setFieldValue}
                 name='categoryId'
+               />
+               <DropdownChoice
+                label='Person assigned to'
+                data={this.assignedNameData}
+                value={values.assignedName}
+                onChange={setFieldValue}
+                name='assignedName'
                />
                <DropdownChoice
                 label='Prioriy'
