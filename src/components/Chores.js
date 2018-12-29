@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
 import { connect } from "react-redux";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import Create from './Create.js';
+import Create from './CreateNew/Create.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class Chores extends React.Component {
