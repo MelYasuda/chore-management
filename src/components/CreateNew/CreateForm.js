@@ -67,10 +67,15 @@ class Create extends React.Component {
         <Formik 
         initialValues={{ desc: '', assignedName: '', priority: '', note: '', categoryId: '' }}
         onSubmit={this._handleSubmit}
+        validationSchema={Yup.object().shape({
+          desc: Yup.string().required('Chore description is required'),
+          categoryId: Yup.number().required('Day needs to be chosen')
+        })}
         render={({
           values,
           handleSubmit,
           setFieldValue,
+          errors,
           }) => (
             <React.Fragment>
               <CreateFormInput
@@ -78,6 +83,7 @@ class Create extends React.Component {
                 value={values.desc}
                 onChange={setFieldValue}
                 name='desc'
+                error={errors.desc}
                 />
               <DropdownChoice
                 label='Choose Day'
@@ -85,6 +91,7 @@ class Create extends React.Component {
                 value={values.categoryId}
                 onChange={setFieldValue}
                 name='categoryId'
+                error={errors.categoryId}
                />
                <DropdownChoice
                 label='Person assigned to'

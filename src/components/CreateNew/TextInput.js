@@ -8,7 +8,7 @@ export default class CreateFormInput extends React.Component {
   };
 
   render(){
-    const { label, ...rest } = this.props;
+    const { label, error, ...rest } = this.props;
     return(
       <View style={styles.root}>
         <FormLabel>{label}</FormLabel>
@@ -17,6 +17,7 @@ export default class CreateFormInput extends React.Component {
         placeholder={label}
         {...rest}
         />
+        <FormValidationMessage>{error}</FormValidationMessage>
       </View>
     );
   }
