@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -65,7 +65,7 @@ class Create extends React.Component {
     return(
       <View style={styles.container}>
         <Formik 
-        initialValues={{ desc: '', assignedName: '', priority: '', note: '', categoryId: 0 }}
+        initialValues={{ desc: '', assignedName: '', priority: '', note: '', categoryId: '' }}
         onSubmit={this._handleSubmit}
         render={({
           values,
