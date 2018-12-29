@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import CreateFormInput from './CreateFormInput';
-import DropdownChoice from './DropDown';
+import CreateFormInput from './TextInput';
+import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
 
 class Create extends React.Component {
