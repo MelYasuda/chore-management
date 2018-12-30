@@ -7,6 +7,10 @@ export default class CreateFormInput extends React.Component {
     this.props.onChange(this.props.name, value);
   };
 
+  _handleTouch = () => {
+    this.props.onTouch(this.props.name);
+  }
+
   render(){
     const { label, error, ...rest } = this.props;
     return(
@@ -14,10 +18,11 @@ export default class CreateFormInput extends React.Component {
         <FormLabel>{label}</FormLabel>
         <FormInput
         onChangeText={this._handleChange}
+        onBlur={this._handleTouch}
         placeholder={label}
         {...rest}
         />
-        <FormValidationMessage>{error}</FormValidationMessage>
+        {error && <FormValidationMessage>{error}</FormValidationMessage>}
       </View>
     );
   }

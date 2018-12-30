@@ -75,29 +75,34 @@ class Create extends React.Component {
           values,
           handleSubmit,
           setFieldValue,
+          setFieldTouched,
           errors,
+          touched,
           }) => (
             <React.Fragment>
               <CreateFormInput
                 label='Chore Description'
                 value={values.desc}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
                 name='desc'
-                error={errors.desc}
+                error={touched.desc && errors.desc}
                 />
               <DropdownChoice
                 label='Choose Day'
                 data={this.dayData}
                 value={values.categoryId}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
                 name='categoryId'
-                error={errors.categoryId}
+                error={touched.categoryId && errors.categoryId}
                />
                <DropdownChoice
                 label='Person assigned to'
                 data={this.assignedNameData}
                 value={values.assignedName}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
                 name='assignedName'
                />
                <DropdownChoice
@@ -105,12 +110,14 @@ class Create extends React.Component {
                 data={this.priorityData}
                 value={values.priority}
                 onChange={setFieldValue}
+                onTouch={setFieldTouched}
                 name='priority'
                />
               <CreateFormInput 
               label='Note'
               value={values.note}
               onChange={setFieldValue}
+              onTouch={setFieldTouched}
               name='note'
               />
               <Button
