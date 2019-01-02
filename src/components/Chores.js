@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Create from './CreateNew/CreateForm.js';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Chore from './Chore';
 
 class Chores extends React.Component {
   state = {
@@ -40,8 +41,9 @@ class Chores extends React.Component {
           data={section.data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-              <Text
-              onPress={() => this.props.navigation.navigate('Details', {
+              <Chore
+              toDetail={() => 
+              this.props.navigation.navigate('Details', {
                 itemId: index,
                 categoryId: item.categoryId
               })}
@@ -54,9 +56,10 @@ class Chores extends React.Component {
                   paddingBottom: 10,
                   paddingTop: 10
                 }}
-              >
-                {item.desc} {item.assignedName}
-              </Text>
+                item={item.desc} 
+                assignedName= {item.assignedName} index={index} 
+                parentFlatList={this} >
+              </Chore>
           )}
         />
       </View>
