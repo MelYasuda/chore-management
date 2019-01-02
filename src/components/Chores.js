@@ -56,8 +56,10 @@ class Chores extends React.Component {
                   paddingBottom: 10,
                   paddingTop: 10
                 }}
-                item={item.desc} 
-                assignedName= {item.assignedName} index={index} 
+                item={item.desc}
+                categoryId={item.categoryId}
+                assignedName= {item.assignedName} 
+                index={index} 
                 parentFlatList={this} >
               </Chore>
           )}

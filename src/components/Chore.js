@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, View, Alert } from 'react-native';
 import Swipeout from 'react-native-swipeout';
+import { connect } from 'react-redux';
 
 class Chore extends Component {
   constructor(props) {
@@ -9,38 +10,48 @@ class Chore extends Component {
         activeRowKey: null
     };          
 }
+
+_handleDelete = () => {
+  const { dispatch } = this.props;
+  const deletingCategoryId = this.props.categoryId;
+  const deletingIndex = this.props.index;
+  const action = {
+    type: 'DELETE_CHORE',
+    deletingCategoryId: deletingCategoryId,
+    deletingIndex: deletingIndex
+  }
+  dispatch(action);
+}
+
   render(){
     const swipeSettings = {
-      sensitivity: 1,
-      scroll: event => console.log('scroll event'),
       left: [
         { 
             onPress: () => {    
-                const deletingRow = this.state.activeRowKey;          
                 Alert.alert(
                     'Alert',
                     'Are you sure you want to delete ?',
                     [                              
                       {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                      {text: 'Yes', onPress: () => {        
-
+                      {text: 'Yes', onPress: () => {      
+                          this._handleDelete()
                       }},
                     ],
                     { cancelable: true }
                   ); 
             }, 
-            text: 'Delete', type: 'delete' 
+            text: 'Done', type: 'primary' 
         }
     ],
       autoClose: true,
-      onClose: (secId, rowId, direction) => {
-          if(this.state.activeRowKey != null) {
-              this.setState({ activeRowKey: null });
-          }              
-      },          
-      onOpen: (secId, rowId, direction) => {
-          this.setState({ activeRowKey: this.props.index });
-      },  
+      // onClose: (secId, rowId, direction) => {
+      //     if(this.state.activeRowKey != null) {
+      //         this.setState({ activeRowKey: null });
+      //     }              
+      // },          
+      // onOpen: (secId, rowId, direction) => {
+      //     this.setState({ activeRowKey: this.props.index });
+      // },  
       // rowId: this.props.index, 
       // sectionId: 0
   }; 
@@ -81,4 +92,4 @@ class Chore extends Component {
   }
 }
 
-export default Chore;
+export default connect()(Chore); 

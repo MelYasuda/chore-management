@@ -1,6 +1,6 @@
 import {
   ADD_CHORES,
-  DELETE_CHORES,
+  DELETE_CHORE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -131,9 +131,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   let newState;
-  const { desc, assignedName, priority, note, categoryId } = action;
+  const { desc, assignedName, priority, note, categoryId} = action;
   switch (action.type) {
     case ADD_CHORES:
+    console.log("add")
     newState = state;
     newState.choreList[categoryId].data.push(
       {
@@ -145,8 +146,12 @@ const reducer = (state = initialState, action) => {
       }
     );
     return newState;
-    case DELETE_CHORES:
-    return state;
+    case DELETE_CHORE:
+    const {deletingCategoryId, deletingIndex} = action;
+    newState = state;
+    newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
+    console.log(newState);
+    return newState;
     default:
       return state;
   }
