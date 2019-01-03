@@ -19,14 +19,14 @@ const initialState = {
     data: [
       {
         desc: "Laundry",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "High",
         note: "Use dry sheet",
         categoryId: 0
       },
       {
         desc: "Doing the dishes",
-        assignedName: "Elton",
+        assignedName: "B",
         priority: "Medium",
         note: "Use pods",
         categoryId: 0
@@ -38,21 +38,21 @@ const initialState = {
     data: [
       {
         desc: "Grocery Shopping",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "High",
         note: "Make it yummy",
         categoryId: 1
       },
       {
         desc: "Take down xmas tree",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "High",
         note: "Use dry sheet",
         categoryId: 1
       },
       {
         desc: "Put away xmas stuff",
-        assignedName: "Elton",
+        assignedName: "B",
         priority: "Medium",
         note: "Use pods",
         categoryId: 1
@@ -64,14 +64,14 @@ const initialState = {
     data: [
       {
         desc: "Clean bathroom",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "Low",
         note: "Do it",
         categoryId: 2
       },
       {
         desc: "Throw away expired stuff",
-        assignedName: "Elton",
+        assignedName: "B",
         priority: "High",
         note: "Use dry sheet",
         categoryId: 2
@@ -83,7 +83,7 @@ const initialState = {
     data: [
       {
         desc: "Pay bills",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "Low",
         note: "Make it yummy",
         categoryId: 3
@@ -95,7 +95,7 @@ const initialState = {
     data: [
       {
         desc: "Vacuum",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "Medium",
         note: "Make it yummy",
         categoryId: 4
@@ -107,7 +107,7 @@ const initialState = {
     data: [
       {
         desc: "Dust",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "High",
         note: "Make it yummy",
         categoryId: 5
@@ -119,7 +119,7 @@ const initialState = {
     data: [
       {
         desc: "Meal prep",
-        assignedName: "Meguru",
+        assignedName: "A",
         priority: "Low",
         note: "Make it yummy",
         categoryId: 6
@@ -150,7 +150,6 @@ const reducer = (state = initialState, action) => {
     const {deletingCategoryId, deletingIndex} = action;
     newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
-    console.log(newState);
     return newState;
     default:
       return state;

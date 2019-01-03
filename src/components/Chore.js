@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {FlatList, StyleSheet, Text, View, Alert } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import { connect } from 'react-redux';
 
@@ -21,6 +21,7 @@ _handleDelete = () => {
     deletingIndex: deletingIndex
   }
   dispatch(action);
+  this.setState({activeRowKey: 1})
 }
 
   render(){
@@ -44,16 +45,6 @@ _handleDelete = () => {
         }
     ],
       autoClose: true,
-      // onClose: (secId, rowId, direction) => {
-      //     if(this.state.activeRowKey != null) {
-      //         this.setState({ activeRowKey: null });
-      //     }              
-      // },          
-      // onOpen: (secId, rowId, direction) => {
-      //     this.setState({ activeRowKey: this.props.index });
-      // },  
-      // rowId: this.props.index, 
-      // sectionId: 0
   }; 
 
     return(
