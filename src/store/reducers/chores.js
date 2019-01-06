@@ -2,123 +2,75 @@ import {
   ADD_CHORES,
   DELETE_CHORE,
 } from "../actions/actionTypes";
+import {Expo, SQLite } from 'expo';
+
+const db = SQLite.openDatabase('db.db');
+
+createTable =() => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'create table if not exists chores (id integer primary key not null, desc text, assignedName text, priority text, note text, categoryId int);'
+    );
+  });
+};
+
+createTable();
 
 const initialState = {
   choreList: [
   {
     title: "Sunday",
-    data: [
-      {
-        desc: "Laundry",
-        assignedName: "A",
-        priority: "High",
-        note: "Use dry sheet",
-        categoryId: 0
-      },
-      {
-        desc: "Doing the dishes",
-        assignedName: "B",
-        priority: "Medium",
-        note: "Use pods",
-        categoryId: 0
-      }
-    ]
+    data: []
   },
   {
     title: "Monday",
-    data: [
-      {
-        desc: "Grocery Shopping",
-        assignedName: "A",
-        priority: "High",
-        note: "Make it yummy",
-        categoryId: 1
-      },
-      {
-        desc: "Take down xmas tree",
-        assignedName: "A",
-        priority: "High",
-        note: "Use dry sheet",
-        categoryId: 1
-      },
-      {
-        desc: "Put away xmas stuff",
-        assignedName: "B",
-        priority: "Medium",
-        note: "Use pods",
-        categoryId: 1
-      }
-    ]
+    data: []
   },
   {
     title: "Tuesday",
-    data: [
-      {
-        desc: "Clean bathroom",
-        assignedName: "A",
-        priority: "Low",
-        note: "Do it",
-        categoryId: 2
-      },
-      {
-        desc: "Throw away expired stuff",
-        assignedName: "B",
-        priority: "High",
-        note: "Use dry sheet",
-        categoryId: 2
-      }
-    ]
+    data: []
   },
   {
     title: "Wednesday",
-    data: [
-      {
-        desc: "Pay bills",
-        assignedName: "A",
-        priority: "Low",
-        note: "Make it yummy",
-        categoryId: 3
-      }
-    ]
+    data: []
   },
   {
     title: "Thursday",
-    data: [
-      {
-        desc: "Vacuum",
-        assignedName: "A",
-        priority: "Medium",
-        note: "Make it yummy",
-        categoryId: 4
-      }
-    ]
+    data: []
   },
   {
     title: "Friday",
-    data: [
-      {
-        desc: "Dust",
-        assignedName: "A",
-        priority: "High",
-        note: "Make it yummy",
-        categoryId: 5
-      }
-    ]
+    data: []
   },
   {
     title: "Saturday",
-    data: [
-      {
-        desc: "Meal prep",
-        assignedName: "A",
-        priority: "Low",
-        note: "Make it yummy",
-        categoryId: 6
-      }
-    ]
+    data: []
   }
 ]
 }
+
+displayTable = () => {
+  let dataArray;
+  let p = new Promise (
+    function (resolve, reject) {
+      db.transaction(tx => {
+        tx.executeSql('select * from chores', [], (_, { rows }) =>
+        {
+         dataArray = rows._array;
+         resolve(dataArray)
+        }
+      );
+      });
+    }
+  )
+    p.then(iterate = () => {
+      dataArray.forEach( data => {
+        initialState.choreList[data.categoryId].data.push(data);
+      });
+    });
+};
+
+displayTable();
 
 const reducer = (state = initialState, action) => {
   let newState;

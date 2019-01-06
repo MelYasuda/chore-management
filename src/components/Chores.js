@@ -28,6 +28,16 @@ class Chores extends React.Component {
     );
   };
 
+  showEmptyListView = () => {
+    return(
+      <View>
+        <Text>
+          You don't have chores yet
+        </Text>
+      </View>
+    );
+  }
+
   _renderContent = section => {
     return (
       <View
@@ -39,8 +49,8 @@ class Chores extends React.Component {
       >
         <FlatList
           data={section.data}
-          extraData={section.data}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => toString(index)}
+          ListEmptyComponent={this.showEmptyListView()}
           renderItem={({ item, index }) => (
               <Chore
               toDetail={() => 
@@ -60,9 +70,8 @@ class Chores extends React.Component {
                 item={item.desc}
                 categoryId={item.categoryId}
                 assignedName= {item.assignedName}
-                keyExtractor={this._keyExtractor} 
                 index={index} 
-                parentFlatList={this} >
+                >
               </Chore>
           )}
         />
@@ -75,8 +84,6 @@ class Chores extends React.Component {
   };
 
   render() {
-    // console.log(this.props.chores);
-    // console.log("=============================")
     return (
       <View style={styles.container}>
         <ScrollView style={{flex: 1}}>
