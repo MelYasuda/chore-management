@@ -68,6 +68,7 @@ class Chores extends React.Component {
                   paddingTop: 10
                 }}
                 item={item.desc}
+                id={item.id}
                 categoryId={item.categoryId}
                 assignedName= {item.assignedName}
                 index={index} 

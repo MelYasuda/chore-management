@@ -15,13 +15,15 @@ _handleDelete = () => {
   const { dispatch } = this.props;
   const deletingCategoryId = this.props.categoryId;
   const deletingIndex = this.props.index;
+  const deletingId = this.props.id;
+  console.log(deletingId);
   const action = {
     type: 'DELETE_CHORE',
     deletingCategoryId: deletingCategoryId,
-    deletingIndex: deletingIndex
+    deletingIndex: deletingIndex,
+    deletingId: deletingId
   }
   dispatch(action);
-  this.setState({activeRowKey: 1})
 }
 
   render(){
