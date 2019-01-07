@@ -77,7 +77,9 @@ const reducer = (state = initialState, action) => {
   const { desc, assignedName, priority, note, categoryId} = action;
   switch (action.type) {
     case ADD_CHORES:
-    console.log("add")
+    db.transaction(tx => {
+      tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
+    });
     newState = state;
     newState.choreList[categoryId].data.push(
       {

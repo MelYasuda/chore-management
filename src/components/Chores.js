@@ -49,7 +49,7 @@ class Chores extends React.Component {
       >
         <FlatList
           data={section.data}
-          keyExtractor={(item, index) => toString(index)}
+          keyExtractor={(item, index) => Math.random().toString()}
           ListEmptyComponent={this.showEmptyListView()}
           renderItem={({ item, index }) => (
               <Chore
