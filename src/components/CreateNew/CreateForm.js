@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CreateFormInput from './TextInput';
 import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
+import { db } from '../../store/reducers/chores.js';
 
 class Create extends React.Component {
   _handleSubmit = (values) => {
@@ -20,7 +21,19 @@ class Create extends React.Component {
       categoryId: categoryId
     }
     dispatch(action);
-  }
+    let p = new Promise(
+      function (resolve, reject){
+        db.transaction(tx => {
+          tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
+          resolve(desc)
+        })
+      }
+    )
+    p.then(test = () => {
+      this.props.navigation.navigate('Chores');
+      resetForm();
+    })
+  };
 
   dayData = [{
     value: 0,

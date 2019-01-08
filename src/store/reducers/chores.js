@@ -2,9 +2,9 @@ import {
   ADD_CHORES,
   DELETE_CHORE,
 } from "../actions/actionTypes";
-import {Expo, SQLite } from 'expo';
+import { SQLite } from 'expo';
 
-const db = SQLite.openDatabase('db.db');
+export const db = SQLite.openDatabase('db.db');
 
 createTable =() => {
   db.transaction(tx => {
@@ -77,9 +77,6 @@ const reducer = (state = initialState, action) => {
   const { desc, assignedName, priority, note, categoryId} = action;
   switch (action.type) {
     case ADD_CHORES:
-    db.transaction(tx => {
-      tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
-    });
     newState = state;
     newState.choreList[categoryId].data.push(
       {
