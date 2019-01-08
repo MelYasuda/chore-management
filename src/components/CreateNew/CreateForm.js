@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import { db } from '../../store/reducers/chores.js';
 
 class Create extends React.Component {
-  _handleSubmit = (values) => {
+  _handleSubmit = (values, {resetForm}) => {
+    // dispatch action to redux store
     const { dispatch } = this.props;
     const { desc, assignedName, priority, note, categoryId } = values;
     const action = {
@@ -21,17 +22,18 @@ class Create extends React.Component {
       categoryId: categoryId
     }
     dispatch(action);
+    // store new chore in database and do other things if it succees
     let p = new Promise(
       function (resolve, reject){
         db.transaction(tx => {
           tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
-          resolve(desc)
+          resolve()
         })
       }
     )
     p.then(test = () => {
-      this.props.navigation.navigate('Chores');
       resetForm();
+      this.props.navigation.navigate('Chores');
     })
   };
 
