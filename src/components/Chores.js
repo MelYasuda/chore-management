@@ -32,7 +32,7 @@ class Chores extends React.Component {
     return(
       <View>
         <Text>
-          You don't have chores yet
+          You don't have assigned chores yet
         </Text>
       </View>
     );

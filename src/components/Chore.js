@@ -16,7 +16,6 @@ _handleDelete = () => {
   const deletingCategoryId = this.props.categoryId;
   const deletingIndex = this.props.index;
   const deletingId = this.props.id;
-  console.log(deletingId);
   const action = {
     type: 'DELETE_CHORE',
     deletingCategoryId: deletingCategoryId,
