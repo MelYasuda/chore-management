@@ -35,7 +35,6 @@ class Create extends React.Component {
       resetForm();
       this.props.navigation.navigate('Chores', {
         categoryIdAddedTo: categoryId,
-        routingFrom: "createForm"
       });
     })
   };

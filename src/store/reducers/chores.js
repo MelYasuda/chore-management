@@ -92,7 +92,6 @@ const reducer = (state = initialState, action) => {
     const {deletingCategoryId, deletingIndex, deletingId} = action;
     db.transaction(tx => {
       tx.executeSql(`delete from chores where id = ?;`, [deletingId]);
-      console.log(deletingId);
     });
     newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);

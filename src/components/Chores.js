@@ -90,9 +90,9 @@ class Chores extends React.Component {
     return (
       <View style={styles.container}>
         <NavigationEvents
-          onWillFocus={( p ) => {
-            let categoryIdAddedTo = this.props.navigation.getParam('categoryIdAddedTo')
-            if(categoryIdAddedTo){
+          onWillFocus={() => {
+            let categoryIdAddedTo = this.props.navigation.getParam('categoryIdAddedTo');
+            if(categoryIdAddedTo || categoryIdAddedTo === 0){
               this.setState({activeSections:[categoryIdAddedTo]})
             }
             }
