@@ -23,6 +23,7 @@ _handleDelete = () => {
     deletingId: deletingId
   }
   dispatch(action);
+  this.props._handleRenderFlatlist()
 }
 
   render(){

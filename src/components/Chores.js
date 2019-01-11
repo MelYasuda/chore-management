@@ -9,9 +9,22 @@ import Chore from './Chore';
 import { NavigationEvents } from "react-navigation";
 
 class Chores extends React.Component {
-  state = {
-    activeSections: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeSections: [],
+      renderFlatlist: false
+    };
+    this._handleRenderFlatlist=this._handleRenderFlatlist.bind(this);
+  }
+
+_handleRenderFlatlist = () => {
+  if(!this.renderFlatlist){
+    this.setState({renderFlatlist: true})
+  } else {
+    this.setState({renderFlatlist: false})
+  }
+}
 
   _renderHeader = (section, index) => {
     return (
@@ -49,6 +62,7 @@ class Chores extends React.Component {
         }}
       >
         <FlatList
+          extraData={this.state}
           data={section.data}
           keyExtractor={(item, index) => Math.random().toString()}
           ListEmptyComponent={this.showEmptyListView()}
@@ -73,6 +87,8 @@ class Chores extends React.Component {
                 categoryId={item.categoryId}
                 assignedName= {item.assignedName}
                 index={index} 
+                rerenderFlatlist={this.props.rerenderFlatlist}
+                _handleRenderFlatlist={this._handleRenderFlatlist}
                 >
               </Chore>
           )}
@@ -86,7 +102,6 @@ class Chores extends React.Component {
   };
 
   render() {
-    // console.log(this.props.navigation.getParam('categoryIdAddedTo'));
     return (
       <View style={styles.container}>
         <NavigationEvents
@@ -94,8 +109,7 @@ class Chores extends React.Component {
             let categoryIdAddedTo = this.props.navigation.getParam('categoryIdAddedTo');
             if(categoryIdAddedTo || categoryIdAddedTo === 0){
               this.setState({activeSections:[categoryIdAddedTo]})
-            }
-            }
+            }}
           }
           onDidBlur={()=>{
             this.props.navigation.setParams({
