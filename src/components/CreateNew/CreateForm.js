@@ -7,6 +7,7 @@ import CreateFormInput from './TextInput';
 import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
 import { db } from '../../store/reducers/chores.js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class Create extends React.Component {
   _handleSubmit = (values, {resetForm}) => {
@@ -80,7 +81,9 @@ class Create extends React.Component {
   render(){
 
     return(
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      resetScrollToCoords={{ x: 0, y: 0 }}>
         <Formik 
         initialValues={{ desc: '', assignedName: '', priority: '', note: '', categoryId: '' }}
         onSubmit={this._handleSubmit}
@@ -145,7 +148,7 @@ class Create extends React.Component {
             </React.Fragment>
           )}
         />
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
