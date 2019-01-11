@@ -27,13 +27,16 @@ class Create extends React.Component {
       function (resolve, reject){
         db.transaction(tx => {
           tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
-          resolve()
+          resolve(categoryId)
         })
       }
     )
     p.then(test = () => {
       resetForm();
-      this.props.navigation.navigate('Chores');
+      this.props.navigation.navigate('Chores', {
+        categoryIdAddedTo: categoryId,
+        routingFrom: "createForm"
+      });
     })
   };
 

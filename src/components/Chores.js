@@ -6,6 +6,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Create from './CreateNew/CreateForm.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chore from './Chore';
+import { NavigationEvents } from "react-navigation";
 
 class Chores extends React.Component {
   state = {
@@ -53,7 +54,7 @@ class Chores extends React.Component {
           ListEmptyComponent={this.showEmptyListView()}
           renderItem={({ item, index }) => (
               <Chore
-              toDetail={() => 
+              toDetail={() =>
               this.props.navigation.navigate('Details', {
                 itemId: index,
                 categoryId: item.categoryId
@@ -85,8 +86,23 @@ class Chores extends React.Component {
   };
 
   render() {
+    // console.log(this.props.navigation.getParam('categoryIdAddedTo'));
     return (
       <View style={styles.container}>
+        <NavigationEvents
+          onWillFocus={( p ) => {
+            let categoryIdAddedTo = this.props.navigation.getParam('categoryIdAddedTo')
+            if(categoryIdAddedTo){
+              this.setState({activeSections:[categoryIdAddedTo]})
+            }
+            }
+          }
+          onDidBlur={()=>{
+            this.props.navigation.setParams({
+              categoryIdAddedTo: false
+            })
+          }}
+        />
         <ScrollView style={{flex: 1}}>
           <Accordion
             sections={this.props.chores}
