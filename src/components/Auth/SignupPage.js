@@ -51,6 +51,7 @@ class SignupPage extends React.Component {
                 value={values.email}
                 onChange={setFieldValue}
                 onTouch={setFieldTouched}
+                autoCapitalize="none"
                 name='email'
                 error={touched.email && errors.email}
                 />
@@ -59,6 +60,7 @@ class SignupPage extends React.Component {
                 value={values.password}
                 onChange={setFieldValue}
                 onTouch={setFieldTouched}
+                autoCapitalize="none"
                 name='password'
                 error={touched.password && errors.password}
                 />

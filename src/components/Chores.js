@@ -7,7 +7,7 @@ import Create from './CreateNew/CreateForm.js';
 import User from './User.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chore from './Chore';
-import { NavigationEvents } from "react-navigation";
+import { NavigationEvents, StackActions, NavigationActions } from "react-navigation";
 
 class Chores extends React.Component {
   constructor(props) {
@@ -139,6 +139,8 @@ const styles = StyleSheet.create({
     width: "100%"
   }
 });
+
+
 
 const mapStateToProps = state => {
   return {

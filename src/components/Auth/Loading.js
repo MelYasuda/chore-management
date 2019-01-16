@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FirebaseConfig from '../../../constants/FirebaseConfig.js';
 import * as firebase from 'firebase';
-
-
+import { StackActions, NavigationActions } from 'react-navigation';
 
 class Loading extends React.Component {
   constructor(props) {
@@ -15,8 +14,15 @@ class Loading extends React.Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      this.props.navigation.navigate(user ? 'Chores' : 'SignupPage')
-    })
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate( user ? { routeName: 'Chores'} : { routeName: 'LoginPage' }),
+        ],
+      });
+      
+      this.props.navigation.dispatch(resetAction);
+    });
   }
 
   render(){

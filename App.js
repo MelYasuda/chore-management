@@ -10,6 +10,7 @@ import Loading from './src/components/Auth/Loading.js';
 import LoginPage from './src/components/Auth/LoginPage.js';
 import SignupPage from './src/components/Auth/SignupPage.js';
 import ForgotPassword from './src/components/Auth/ForgotPassword.js';
+import User from './src/components/User.js';
 
 const store = configureStore();
 
@@ -46,7 +47,8 @@ const MainAppNavigator = createStackNavigator(
     Loading: Loading,
     SignupPage: SignupPage,
     LoginPage: LoginPage,
-    ForgotPassword: ForgotPassword
+    ForgotPassword: ForgotPassword,
+    User: User
   },
   {
     initialRouteName: "Loading"
