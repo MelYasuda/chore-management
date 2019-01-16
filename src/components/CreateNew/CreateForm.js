@@ -3,7 +3,7 @@ import { StyleSheet, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import CreateFormInput from './TextInput';
+import FormInputField from './TextInput';
 import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
 import { db } from '../../store/reducers/chores.js';
@@ -100,7 +100,7 @@ class Create extends React.Component {
           touched,
           }) => (
             <React.Fragment>
-              <CreateFormInput
+              <FormInputField
                 label='Chore Description'
                 value={values.desc}
                 onChange={setFieldValue}
@@ -133,7 +133,7 @@ class Create extends React.Component {
                 onTouch={setFieldTouched}
                 name='priority'
                />
-              <CreateFormInput 
+              <FormInputField 
               label='Note'
               value={values.note}
               onChange={setFieldValue}

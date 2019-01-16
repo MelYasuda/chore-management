@@ -4,6 +4,7 @@ import Accordion from "react-native-collapsible/Accordion";
 import { connect } from "react-redux";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Create from './CreateNew/CreateForm.js';
+import User from './User.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chore from './Chore';
 import { NavigationEvents } from "react-navigation";
@@ -156,6 +157,11 @@ const TabNavigator = createMaterialBottomTabNavigator({
     navigationOptions: {
       tabBarIcon: ({tintColor})=>(
         <Icon name="md-add" color={tintColor} size={30}/>
+      )} },
+  User: { screen: User,
+    navigationOptions: {
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-person" color={tintColor} size={30}/>
       )} },
 },
 {

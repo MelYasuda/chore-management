@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 
-export default class CreateFormInput extends React.Component {
+export default class FormInputField extends React.Component {
   _handleChange = value => {
     this.props.onChange(this.props.name, value);
   };
@@ -20,6 +20,7 @@ export default class CreateFormInput extends React.Component {
         onChangeText={this._handleChange}
         onBlur={this._handleTouch}
         placeholder={label}
+        secureTextEntry={label==='Password' ? true : null }
         {...rest}
         />
         {error && <FormValidationMessage>{error}</FormValidationMessage>}
