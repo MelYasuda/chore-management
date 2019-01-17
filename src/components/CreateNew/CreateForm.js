@@ -32,9 +32,11 @@ class Create extends React.Component {
       priority,
       note,
       categoryId
-  }).then((data)=>{
-      //success callback
-      console.log('data ' , data)
+  }).then(test = () => {
+    resetForm();
+    this.props.navigation.navigate('Chores', {
+      categoryIdAddedTo: categoryId,
+    });
   }).catch((error)=>{
       //error callback
       console.log('error ' , error)

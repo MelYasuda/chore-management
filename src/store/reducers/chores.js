@@ -3,18 +3,10 @@ import {
   DELETE_CHORE,
 } from "../actions/actionTypes";
 import { SQLite } from 'expo';
+import FirebaseConfig from '../../../constants/FirebaseConfig.js';
+import * as firebase from 'firebase';
 
-export const db = SQLite.openDatabase('db.db');
-
-createTable =() => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'create table if not exists chores (id integer primary key not null, desc text, assignedName text, priority text, note text, categoryId int);'
-    );
-  });
-};
-
-createTable();
+firebase.initializeApp(FirebaseConfig);
 
 const initialState = {
   choreList: [
@@ -53,14 +45,16 @@ displayTable = () => {
   let dataArray;
   let p = new Promise (
     function (resolve, reject) {
-      db.transaction(tx => {
-        tx.executeSql('select * from chores', [], (_, { rows }) =>
-        {
-         dataArray = rows._array;
-         resolve(dataArray)
+      firebase.database().ref('ChoreData/').on('value', function (snapshot) {
+        const value = snapshot.val();
+        const keyArray = Object.keys(value);
+        const valuesArray = Object.values(value);
+        for(i = 0; i < keyArray.length; i++){
+         valuesArray[i].id = keyArray[i]
         }
-      );
-      });
+        dataArray = valuesArray
+        resolve(dataArray);
+    });
     }
   )
     p.then(iterate = () => {
@@ -84,15 +78,15 @@ const reducer = (state = initialState, action) => {
         assignedName: assignedName,
         priority: priority,
         note: note,
-        categoryId: categoryId
+        categoryId: categoryId,
+        id: null
       }
     );
     return newState;
     case DELETE_CHORE:
     const {deletingCategoryId, deletingIndex, deletingId} = action;
-    db.transaction(tx => {
-      tx.executeSql(`delete from chores where id = ?;`, [deletingId]);
-    });
+    let choreRef = firebase.database().ref('ChoreData/' + deletingId);
+    choreRef.remove();
     newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
     return newState;

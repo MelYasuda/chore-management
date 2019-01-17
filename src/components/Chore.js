@@ -57,7 +57,8 @@ _handleDelete = () => {
                   }}>
           <View style={{
                     flex: 1,
-                    flexDirection:'row',             backgroundColor: 'mediumseagreen'
+                    flexDirection:'row',
+                    backgroundColor: 'mediumseagreen'
             }}>
             <View style={{
                 flex: 1,
