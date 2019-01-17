@@ -47,20 +47,25 @@ displayTable = () => {
     function (resolve, reject) {
       firebase.database().ref('ChoreData/').on('value', function (snapshot) {
         const value = snapshot.val();
-        const keyArray = Object.keys(value);
-        const valuesArray = Object.values(value);
-        for(i = 0; i < keyArray.length; i++){
-         valuesArray[i].id = keyArray[i]
+        let valuesArray;
+        if(value){
+          const keyArray = Object.keys(value);
+                valuesArray = Object.values(value);
+          for(i = 0; i < keyArray.length; i++){
+            valuesArray[i].id = keyArray[i]
+           }
         }
-        dataArray = valuesArray
+        dataArray = valuesArray;   
         resolve(dataArray);
     });
     }
   )
     p.then(iterate = () => {
-      dataArray.forEach( data => {
-        initialState.choreList[data.categoryId].data.push(data);
-      });
+      if(dataArray){
+        dataArray.forEach( data => {
+          initialState.choreList[data.categoryId].data.push(data);
+        });
+      }
     });
 };
 
