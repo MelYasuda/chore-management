@@ -7,7 +7,9 @@ import FormInputField from './TextInput';
 import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
 import { db } from '../../store/reducers/chores.js';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as firebase from 'firebase';
+
 
 class Create extends React.Component {
   _handleSubmit = (values, {resetForm}) => {
@@ -24,20 +26,19 @@ class Create extends React.Component {
     }
     dispatch(action);
     // store new chore in database and do other things if it succees
-    let p = new Promise(
-      function (resolve, reject){
-        db.transaction(tx => {
-          tx.executeSql('insert into chores (desc, assignedName, priority, note, categoryId) values (?, ?, ?, ?, ?)', [desc, assignedName, priority, note, categoryId]);
-          resolve(categoryId)
-        })
-      }
-    )
-    p.then(test = () => {
-      resetForm();
-      this.props.navigation.navigate('Chores', {
-        categoryIdAddedTo: categoryId,
-      });
-    })
+    firebase.database().ref('ChoreData/').push({
+      desc,
+      assignedName,
+      priority,
+      note,
+      categoryId
+  }).then((data)=>{
+      //success callback
+      console.log('data ' , data)
+  }).catch((error)=>{
+      //error callback
+      console.log('error ' , error)
+  })
   };
 
   dayData = [{
