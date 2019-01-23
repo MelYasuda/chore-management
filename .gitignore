@@ -6,4 +6,4 @@ npm-debug.*
 *.key
 *.mobileprovision
 example.js
-FirebaseConfic.js
+FirebaseConfig.js
