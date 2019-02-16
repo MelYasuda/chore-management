@@ -7,6 +7,9 @@
 ## Description
 It is a React Native application for managing chores. Users can use it to manage chores with people in the house easily. 
 
+## Demo Video
+https://www.youtube.com/watch?v=YicXYbGQbWw
+
 ## Specifications (MVP)
 * The application allows the user to see the list of the chores with the assigned person's name sorted by days in the week
 * The application allows the user to delete the chore by swiping it to the left on the chore list
