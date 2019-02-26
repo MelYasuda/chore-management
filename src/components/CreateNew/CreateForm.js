@@ -26,7 +26,7 @@ class Create extends React.Component {
     }
     dispatch(action);
     // store new chore in database and do other things if it succees
-    firebase.database().ref('ChoreData/').push({
+    firebase.database().ref('chore-lists/').push({
       desc,
       assignedName,
       priority,
@@ -76,9 +76,9 @@ class Create extends React.Component {
 ];
 
   assignedNameData = [{
-    value: "Meguru"
+    value: "Kevin"
   },{
-    value: "Elton"
+    value: "David"
   }]
 
   render(){

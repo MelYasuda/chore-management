@@ -2,7 +2,6 @@ import {
   ADD_CHORES,
   DELETE_CHORE,
 } from "../actions/actionTypes";
-import { SQLite } from 'expo';
 import FirebaseConfig from '../../../constants/FirebaseConfig.js';
 import * as firebase from 'firebase';
 
@@ -45,7 +44,7 @@ displayTable = () => {
   let dataArray;
   let p = new Promise (
     function (resolve, reject) {
-      firebase.database().ref('ChoreData/').on('value', function (snapshot) {
+      firebase.database().ref('chore-lists/').on('value', function (snapshot) {
         const value = snapshot.val();
         let valuesArray;
         if(value){
@@ -90,7 +89,7 @@ const reducer = (state = initialState, action) => {
     return newState;
     case DELETE_CHORE:
     const {deletingCategoryId, deletingIndex, deletingId} = action;
-    let choreRef = firebase.database().ref('ChoreData/' + deletingId);
+    let choreRef = firebase.database().ref('chore-lists/' + deletingId);
     choreRef.remove();
     newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);

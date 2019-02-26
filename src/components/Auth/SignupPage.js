@@ -19,10 +19,62 @@ class SignupPage extends React.Component {
 
   handleSignup = (values, {resetForm}) => {
     const {email, password} = values;
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) =>   {
-      const errorMessage = error.message;
-      Alert.alert(errorMessage);
-    })
+    const signUpWithEmailPassword = () => {
+      return new Promise ((resolve, reject) => {
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+          const errorMessage = error.message;
+          Alert.alert(errorMessage);
+        })
+        resolve()
+      })
+    }
+
+    const getSignedupUser = () => {
+      return new Promise((resolve, reject) => {
+        firebase.auth().onAuthStateChanged( user => {
+          if(user){
+            resolve(user)
+          }
+        })
+      })
+    }    
+
+    const createUserAccount = (user) => {
+      return new Promise ((resolve, reject) => {
+        const uid = user.uid;
+        if(uid){
+        firebase.database().ref(`users/${uid}`).set({
+          email: email
+        })
+        resolve(user)
+      } else{
+        reject(Error('Failed to create a user'))
+        }
+      })
+    }
+
+    const createChoreList = (user) => {
+      return new Promise ((resolve, reject) => {
+        if(user){
+        const ref = firebase.database().ref('choreLists/');
+        const choreListId = ref.push();
+        firebase.database().ref(`users/${user.uid}`).update({
+          choreLists:choreListId.key
+        })
+        resolve()
+      } else {
+        reject(Error('Failed to create a chore list'))
+      }
+      })
+    }
+
+    signUpWithEmailPassword().then(getSignedupUser).then(createUserAccount).then(createChoreList);    
+
+
+    // return new Promise ((resolve, reject) => {
+        
+    // })
+
   }
 
   render(){
