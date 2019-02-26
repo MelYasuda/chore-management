@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import FormInputField from './TextInput';
 import DropdownChoice from './DropDownInput';
 import { connect } from 'react-redux';
-import { db } from '../../store/reducers/chores.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as firebase from 'firebase';
 
@@ -26,21 +25,37 @@ class Create extends React.Component {
     }
     dispatch(action);
     // store new chore in database and do other things if it succees
-    firebase.database().ref('chore-lists/').push({
-      desc,
-      assignedName,
-      priority,
-      note,
-      categoryId
-  }).then(test = () => {
-    resetForm();
-    this.props.navigation.navigate('Chores', {
-      categoryIdAddedTo: categoryId,
-    });
-  }).catch((error)=>{
-      //error callback
-      console.log('error ' , error)
-  })
+
+    const getChoreListId = () => {
+      return new Promise ((resolve, reject) => {
+        const currentUid = firebase.auth().currentUser.uid;
+        firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+          const choreListId = snapshot.val();
+          console.log(choreListId)
+          resolve(choreListId)
+        })
+      })
+    }
+
+    const addNewChore = (choreListId) => {
+        firebase.database().ref(`choreLists/${choreListId}/chores`).push({
+          desc,
+          assignedName,
+          priority,
+          note,
+          categoryId
+      }).then(test = () => {
+        resetForm();
+        this.props.navigation.navigate('Chores', {
+          categoryIdAddedTo: categoryId,
+        });
+      }).catch((error)=>{
+          console.log('error ' , error)
+      })
+    }
+
+    getChoreListId().then(addNewChore)
+
   };
 
   dayData = [{

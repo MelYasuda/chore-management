@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, Alert } from "react-native";
 import * as firebase from 'firebase';
 import { Button } from 'react-native-elements';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
+
 
 class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = { currentUser: null }
-    this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleLogout = this._handleLogout.bind(this);
   }
 
   componentDidMount() {
@@ -16,8 +18,10 @@ class User extends React.Component {
     this.setState({ currentUser: email })
 }
 
-_handleSubmit = () => {
+_handleLogout = () => {
   firebase.auth().signOut().then(()=> {
+    const {dispatch} = this.props;
+    dispatch({type: 'USER_LOGOUT'})
     console.log("logged out");
   }).catch(function(error) {
     Alert.alert(error)
@@ -32,7 +36,7 @@ _handleSubmit = () => {
         <Button
               buttonStyle={styles.button}
               title="Log Out"
-              onPress={this._handleSubmit}
+              onPress={this._handleLogout}
             />
       </View>
     );
@@ -52,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default User;
+export default connect()(User);

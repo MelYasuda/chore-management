@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Alert } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import { connect } from 'react-redux';
+import * as firebase from 'firebase';
 
 class Chore extends Component {
   constructor(props) {
@@ -24,6 +25,9 @@ _handleDelete = () => {
   }
   dispatch(action);
   this.props._handleRenderFlatlist()
+
+  let choreRef = firebase.database().ref('chore-lists/' + deletingId);
+  choreRef.remove();
 }
 
   render(){

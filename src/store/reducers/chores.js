@@ -42,30 +42,52 @@ const initialState = {
 
 displayTable = () => {
   let dataArray;
-  let p = new Promise (
-    function (resolve, reject) {
-      firebase.database().ref('chore-lists/').on('value', function (snapshot) {
-        const value = snapshot.val();
-        let valuesArray;
-        if(value){
-          const keyArray = Object.keys(value);
-                valuesArray = Object.values(value);
-          for(i = 0; i < keyArray.length; i++){
-            valuesArray[i].id = keyArray[i]
-           }
+
+  const getUsersChoreListId = () => {
+    return new Promise ((resolve, reject) => {
+      firebase.auth().onAuthStateChanged( user => {
+        if(user){
+          const currentUid = user.uid;
+          firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+            const choreListId = snapshot.val();
+            console.log(choreListId)
+            resolve(choreListId)
+          })
         }
-        dataArray = valuesArray;   
-        resolve(dataArray);
-    });
-    }
-  )
-    p.then(iterate = () => {
-      if(dataArray){
-        dataArray.forEach( data => {
-          initialState.choreList[data.categoryId].data.push(data);
-        });
+      })
+    })
+  }
+
+  const getUsersChores = (choreListId) => {
+    return new Promise (
+      function (resolve, reject) {
+        firebase.database().ref(`choreLists/${choreListId}/chores/`).on('value', function (snapshot) {
+            const value = snapshot.val();
+            let valuesArray;
+            if(value){
+              const keyArray = Object.keys(value);
+                    valuesArray = Object.values(value);
+              for(i = 0; i < keyArray.length; i++){
+                valuesArray[i].id = keyArray[i]
+               }
+            }
+            dataArray = valuesArray;   
+            resolve(dataArray);
+      });
       }
-    });
+    )
+  }
+
+  const pushToReduxChoreList = (dataArray) => {
+    if(dataArray){
+      dataArray.forEach( data => {
+        initialState.choreList[data.categoryId].data.push(data);
+      });
+    }
+  }
+
+  getUsersChoreListId().then(getUsersChores).then(pushToReduxChoreList)
+
 };
 
 displayTable();
@@ -89,8 +111,8 @@ const reducer = (state = initialState, action) => {
     return newState;
     case DELETE_CHORE:
     const {deletingCategoryId, deletingIndex, deletingId} = action;
-    let choreRef = firebase.database().ref('chore-lists/' + deletingId);
-    choreRef.remove();
+    // let choreRef = firebase.database().ref('chore-lists/' + deletingId);
+    // choreRef.remove();
     newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
     return newState;
