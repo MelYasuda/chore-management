@@ -9,13 +9,22 @@ import { connect } from 'react-redux';
 class User extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentUser: null }
+    this.state = {
+       email: null,
+       username: null 
+      }
     this._handleLogout = this._handleLogout.bind(this);
   }
 
   componentDidMount() {
-    const { email } = firebase.auth().currentUser;
-    this.setState({ currentUser: email })
+    const { email, uid } = firebase.auth().currentUser;
+    firebase.database().ref(`users/${uid}/username`).once('value', snapshot =>{
+      const username = snapshot.val()
+      this.setState({
+        email: email,
+        username: username
+      })
+    })
 }
 
 _handleLogout = () => {
@@ -29,10 +38,11 @@ _handleLogout = () => {
 }
 
   render(){
-    const { currentUser } = this.state;
+    const { email, username } = this.state;
     return(
       <View style={styles.container}>
-        <Text>{currentUser}</Text>
+        <Text>{username}</Text>
+        <Text>{email}</Text>
         <Button
               buttonStyle={styles.button}
               title="Log Out"

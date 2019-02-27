@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -11,6 +11,35 @@ import * as firebase from 'firebase';
 
 
 class Create extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoading: true,
+      usernames: null,
+    }
+  }
+
+  componentDidMount() {
+    const { uid } = firebase.auth().currentUser;
+    firebase.database().ref(`users/${uid}/username`).once('value', snapshot =>{
+      
+      // dropdown value has to be this shape
+      // [{
+      //   value: username
+      // }]
+      const dropdownUsernames = []
+      const dropdownUsernameValue = {}
+      const username = snapshot.val()
+      dropdownUsernameValue['value'] = username
+      dropdownUsernames.push(dropdownUsernameValue)
+      this.setState({
+        isLoading: false,
+        dropdownUsernames: dropdownUsernames
+      })
+
+    })
+}
+
   _handleSubmit = (values, {resetForm}) => {
     // dispatch action to redux store
     const { dispatch } = this.props;
@@ -90,14 +119,10 @@ class Create extends React.Component {
   }
 ];
 
-  assignedNameData = [{
-    value: "Kevin"
-  },{
-    value: "David"
-  }]
+
 
   render(){
-
+    if(this.state.isLoading) return <Text>Loadind</Text>
     return(
       <KeyboardAwareScrollView
       contentContainerStyle={styles.container}
@@ -137,7 +162,7 @@ class Create extends React.Component {
                />
                <DropdownChoice
                 label='Person assigned to'
-                data={this.assignedNameData}
+                data={this.state.dropdownUsernames}
                 value={values.assignedName}
                 onChange={setFieldValue}
                 onTouch={setFieldTouched}
