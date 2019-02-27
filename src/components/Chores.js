@@ -19,7 +19,8 @@ class Chores extends React.Component {
     this.state = {
       activeSections: [],
       renderFlatlist: false,
-      chores: null
+      chores: null,
+      isLoading: true
     };
     this._handleRenderFlatlist=this._handleRenderFlatlist.bind(this);
   }
@@ -27,6 +28,7 @@ class Chores extends React.Component {
   componentDidMount(){
     let dataArray=[];
   
+    console.log("didmount")
     const getUsersChores = (choreListId) => {
       return new Promise (
         function (resolve, reject) {
@@ -64,7 +66,10 @@ class Chores extends React.Component {
     }
 
     const setStateChores = () => {
-      this.setState({chores: this.props.chores})
+      this.setState({
+        chores: this.props.chores,
+        isLoading: false
+      })
     }
   
     this.getUsersChoreListId().then(getUsersChores).then(dispatchStoresChores).then(setStateChores)
@@ -75,12 +80,28 @@ class Chores extends React.Component {
 
   getUsersChoreListId = () => {
     return new Promise ((resolve, reject) => {
-      const currentUid = firebase.auth().currentUser.uid;
-      firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
-        const choreListId = snapshot.val();
-        console.log(choreListId)
-        resolve(choreListId)
-      })
+
+      firebase.auth().onAuthStateChanged( user => {
+        if(user){
+          const currentUid = user.uid;
+          console.log(currentUid)
+          firebase.database().ref(`users/${currentUid}/choreLists`).on('value', snapshot => {
+            const choreListId = snapshot.val();
+            if(choreListId){
+              console.log(choreListId)
+              resolve(choreListId)
+            }
+          })
+        }
+      } )
+
+      // const currentUid = firebase.auth().currentUser.uid;
+      // firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+      //   const choreListId = snapshot.val();
+      //   console.log(choreListId)
+      //   resolve(choreListId)
+      // })
+
     })
   }
 
@@ -169,8 +190,7 @@ _handleRenderFlatlist = () => {
   };
 
   render() {
-    console.log(this.state.chores)
-    if(!this.state.chores) return <Text>loading</Text>
+    if(this.state.isLoading) return <Text>loading</Text>
     return (
       <View style={styles.container}>
         <NavigationEvents

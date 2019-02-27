@@ -55,18 +55,20 @@ class SignupPage extends React.Component {
     }
 
     const createChoreList = (user) => {
-      return new Promise ((resolve, reject) => {
+      // return new Promise ((resolve, reject) => {
         if(user){
         const ref = firebase.database().ref('choreLists/');
         const choreListId = ref.push();
         firebase.database().ref(`users/${user.uid}`).update({
-          choreLists:choreListId.key
+          // choreLists:choreListId.key
+          choreLists: "-LZkUdQ0bZ2AGPUnmm-B"
         })
-        resolve()
+        // resolve()
       } else {
-        reject(Error('Failed to create a chore list'))
+        console.log('createChoreList failed')
+        // reject(Error('Failed to create a chore list'))
       }
-      })
+      // })
     }
 
     signUpWithEmailPassword().then(getSignedupUser).then(createUserAccount).then(createChoreList);    

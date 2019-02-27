@@ -68,7 +68,6 @@ const reducer = (state = get_INITIAL_STATE(), action) => {
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
     return newState;
     default:
-      console.log(state)
       return state;
   }
 };
