@@ -1,1 +1,1 @@
-export { addChore, deleteChore } from "./chores";
+export { addChore, deleteChore, storedChores, userLogout } from "./chores";

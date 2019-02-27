@@ -8,15 +8,78 @@ import User from './User.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chore from './Chore';
 import { NavigationEvents, StackActions, NavigationActions } from "react-navigation";
+import FirebaseConfig from '../../constants/FirebaseConfig.js';
+import * as firebase from 'firebase';
+
+firebase.initializeApp(FirebaseConfig);
 
 class Chores extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeSections: [],
-      renderFlatlist: false
+      renderFlatlist: false,
+      chores: null
     };
     this._handleRenderFlatlist=this._handleRenderFlatlist.bind(this);
+  }
+
+  componentDidMount(){
+    let dataArray;
+  
+    const getUsersChores = (choreListId) => {
+      return new Promise (
+        function (resolve, reject) {
+          firebase.database().ref(`choreLists/${choreListId}/chores/`).on('value', function (snapshot) {
+              const value = snapshot.val();
+              let valuesArray;
+              if(value){
+                const keyArray = Object.keys(value);
+                      valuesArray = Object.values(value);
+                for(i = 0; i < keyArray.length; i++){
+                  valuesArray[i].id = keyArray[i]
+                 }
+              }
+              dataArray = valuesArray;   
+              resolve(dataArray);
+        });
+        }
+      )
+    }
+  
+    const dispatchStoresChores = (dataArray) => {
+      return new Promise ((resolve, reject) => {
+        if(dataArray){
+          const { dispatch } = this.props;
+          const action = {
+            type: 'STORED_CHORES',
+            dataArray: dataArray
+          }
+          dispatch(action)
+          resolve()
+        }
+      })
+    }
+
+    const setStateChores = () => {
+      this.setState({chores: this.props.chores})
+    }
+  
+    this.getUsersChoreListId().then(getUsersChores).then(dispatchStoresChores).then(setStateChores)
+  
+    console.log('didmount')
+    
+  }
+
+  getUsersChoreListId = () => {
+    return new Promise ((resolve, reject) => {
+      const currentUid = firebase.auth().currentUser.uid;
+      firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+        const choreListId = snapshot.val();
+        console.log(choreListId)
+        resolve(choreListId)
+      })
+    })
   }
 
 _handleRenderFlatlist = () => {
@@ -83,6 +146,7 @@ _handleRenderFlatlist = () => {
                   paddingBottom: 10,
                   paddingTop: 10
                 }}
+                getUsersChoreListId={this.getUsersChoreListId}
                 item={item.desc}
                 id={item.id}
                 categoryId={item.categoryId}
@@ -103,6 +167,7 @@ _handleRenderFlatlist = () => {
   };
 
   render() {
+    if(!this.state.chores) return <Text>loading</Text>
     return (
       <View style={styles.container}>
         <NavigationEvents
@@ -120,7 +185,7 @@ _handleRenderFlatlist = () => {
         />
         <ScrollView style={{flex: 1}}>
           <Accordion
-            sections={this.props.chores}
+            sections={this.state.chores}
             activeSections={this.state.activeSections}
             renderHeader={this._renderHeader}
             renderContent={this._renderContent}

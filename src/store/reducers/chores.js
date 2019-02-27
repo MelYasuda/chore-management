@@ -1,103 +1,57 @@
 import {
   ADD_CHORES,
   DELETE_CHORE,
+  STORED_CHORES
 } from "../actions/actionTypes";
-import FirebaseConfig from '../../../constants/FirebaseConfig.js';
-import * as firebase from 'firebase';
 
-firebase.initializeApp(FirebaseConfig);
-
-const initialState = {
-  choreList: [
-  {
-    title: "Sunday",
-    data: []
-  },
-  {
-    title: "Monday",
-    data: []
-  },
-  {
-    title: "Tuesday",
-    data: []
-  },
-  {
-    title: "Wednesday",
-    data: []
-  },
-  {
-    title: "Thursday",
-    data: []
-  },
-  {
-    title: "Friday",
-    data: []
-  },
-  {
-    title: "Saturday",
-    data: []
+get_INITIAL_STATE = () => {
+  return {
+    choreList: [
+      {
+        title: "Sunday",
+        data: []
+      },
+      {
+        title: "Monday",
+        data: []
+      },
+      {
+        title: "Tuesday",
+        data: []
+      },
+      {
+        title: "Wednesday",
+        data: []
+      },
+      {
+        title: "Thursday",
+        data: []
+      },
+      {
+        title: "Friday",
+        data: []
+      },
+      {
+        title: "Saturday",
+        data: []
+      }
+    ]
   }
-]
 }
 
-displayTable = () => {
-  let dataArray;
+const reducer = (state = get_INITIAL_STATE(), action) => {
 
-  const getUsersChoreListId = () => {
-    return new Promise ((resolve, reject) => {
-      firebase.auth().onAuthStateChanged( user => {
-        if(user){
-          const currentUid = user.uid;
-          firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
-            const choreListId = snapshot.val();
-            console.log(choreListId)
-            resolve(choreListId)
-          })
-        }
-      })
-    })
-  }
+  let newState = Object.assign({}, state);
 
-  const getUsersChores = (choreListId) => {
-    return new Promise (
-      function (resolve, reject) {
-        firebase.database().ref(`choreLists/${choreListId}/chores/`).on('value', function (snapshot) {
-            const value = snapshot.val();
-            let valuesArray;
-            if(value){
-              const keyArray = Object.keys(value);
-                    valuesArray = Object.values(value);
-              for(i = 0; i < keyArray.length; i++){
-                valuesArray[i].id = keyArray[i]
-               }
-            }
-            dataArray = valuesArray;   
-            resolve(dataArray);
-      });
-      }
-    )
-  }
-
-  const pushToReduxChoreList = (dataArray) => {
-    if(dataArray){
-      dataArray.forEach( data => {
-        initialState.choreList[data.categoryId].data.push(data);
-      });
-    }
-  }
-
-  getUsersChoreListId().then(getUsersChores).then(pushToReduxChoreList)
-
-};
-
-displayTable();
-
-const reducer = (state = initialState, action) => {
-  let newState;
   const { desc, assignedName, priority, note, categoryId} = action;
   switch (action.type) {
+    case STORED_CHORES:
+    const { dataArray } = action;
+    dataArray.forEach( data => {
+      newState.choreList[data.categoryId].data.push(data);
+    });
+    return newState;
     case ADD_CHORES:
-    newState = state;
     newState.choreList[categoryId].data.push(
       {
         desc: desc,
@@ -111,12 +65,10 @@ const reducer = (state = initialState, action) => {
     return newState;
     case DELETE_CHORE:
     const {deletingCategoryId, deletingIndex, deletingId} = action;
-    // let choreRef = firebase.database().ref('chore-lists/' + deletingId);
-    // choreRef.remove();
-    newState = state;
     newState.choreList[deletingCategoryId].data.splice(deletingIndex, 1);
     return newState;
     default:
+      console.log(state)
       return state;
   }
 };

@@ -26,8 +26,12 @@ _handleDelete = () => {
   dispatch(action);
   this.props._handleRenderFlatlist()
 
-  let choreRef = firebase.database().ref('chore-lists/' + deletingId);
-  choreRef.remove();
+  const deleteChoreDatabase = (choreListId) => {
+    let choreRef = firebase.database().ref(`choreLists/${choreListId}/chores/${deletingId}`);
+    choreRef.remove();
+  }
+
+  this.props.getUsersChoreListId().then(deleteChoreDatabase)
 }
 
   render(){

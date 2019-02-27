@@ -26,7 +26,7 @@ class Create extends React.Component {
     dispatch(action);
     // store new chore in database and do other things if it succees
 
-    const getChoreListId = () => {
+    const getUsersChoreListId = () => {
       return new Promise ((resolve, reject) => {
         const currentUid = firebase.auth().currentUser.uid;
         firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
@@ -54,7 +54,7 @@ class Create extends React.Component {
       })
     }
 
-    getChoreListId().then(addNewChore)
+    getUsersChoreListId().then(addNewChore)
 
   };
 

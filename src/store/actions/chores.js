@@ -1,4 +1,11 @@
-import { ADD_CHORE, DELETE_CHORE } from './actionTypes';
+import { ADD_CHORE, DELETE_CHORE, STORED_CHORES } from './actionTypes';
+
+export const storedChores = (dataArray) => {
+    return {
+        type: STORED_CHORES,
+        dataArray: dataArray
+    }
+}
 
 export const addChore = (choreDesc, assignedName, priority, note, categoryId) => {
     return {
@@ -16,3 +23,9 @@ export const deleteChore = () => {
         type: DELETE_CHORE
     };
 };
+
+export const userLogout = () => {
+    return {
+        type: USER_LOGOUT
+    }
+}

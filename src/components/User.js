@@ -22,7 +22,7 @@ _handleLogout = () => {
   firebase.auth().signOut().then(()=> {
     const {dispatch} = this.props;
     dispatch({type: 'USER_LOGOUT'})
-    console.log("logged out");
+    console.log(dispatch);
   }).catch(function(error) {
     Alert.alert(error)
   });
