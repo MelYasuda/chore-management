@@ -25,7 +25,7 @@ class Chores extends React.Component {
   }
 
   componentDidMount(){
-    let dataArray;
+    let dataArray=[];
   
     const getUsersChores = (choreListId) => {
       return new Promise (
@@ -39,9 +39,11 @@ class Chores extends React.Component {
                 for(i = 0; i < keyArray.length; i++){
                   valuesArray[i].id = keyArray[i]
                  }
+                 dataArray = valuesArray;   
+                 resolve(dataArray);
+              } else {
+                resolve(dataArray)
               }
-              dataArray = valuesArray;   
-              resolve(dataArray);
         });
         }
       )
@@ -167,6 +169,7 @@ _handleRenderFlatlist = () => {
   };
 
   render() {
+    console.log(this.state.chores)
     if(!this.state.chores) return <Text>loading</Text>
     return (
       <View style={styles.container}>

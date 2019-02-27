@@ -18,7 +18,7 @@ class SignupPage extends React.Component {
   }
 
   handleSignup = (values, {resetForm}) => {
-    const {email, password} = values;
+    const {username, email, password} = values;
     const signUpWithEmailPassword = () => {
       return new Promise ((resolve, reject) => {
         firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
@@ -44,7 +44,8 @@ class SignupPage extends React.Component {
         const uid = user.uid;
         if(uid){
         firebase.database().ref(`users/${uid}`).set({
-          email: email
+          email: email,
+          username: username
         })
         resolve(user)
       } else{
@@ -70,11 +71,6 @@ class SignupPage extends React.Component {
 
     signUpWithEmailPassword().then(getSignedupUser).then(createUserAccount).then(createChoreList);    
 
-
-    // return new Promise ((resolve, reject) => {
-        
-    // })
-
   }
 
   render(){
@@ -83,9 +79,10 @@ class SignupPage extends React.Component {
       contentContainerStyle={styles.container}
       resetScrollToCoords={{ x: 0, y: 0 }}>
         <Formik 
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ username: '', email: '', password: '' }}
         onSubmit={this.handleSignup}
         validationSchema={Yup.object().shape({
+          username: Yup.string().required('Username is required'),
           email: Yup.string().required('Email address is required'),
           password: Yup.string().required('Password needs to be provided')
         })}
@@ -98,6 +95,14 @@ class SignupPage extends React.Component {
           touched,
           }) => (
             <React.Fragment>
+              <FormInputField
+                label='Username'
+                value={values.username}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name='username'
+                error={touched.username && errors.username}
+                />
               <FormInputField
                 label='Email'
                 value={values.email}
@@ -118,7 +123,7 @@ class SignupPage extends React.Component {
                 />
               <Button
               buttonStyle={styles.button}
-              title="Submit"
+              title="Sign Up"
               onPress={handleSubmit}
             />
             </React.Fragment>
