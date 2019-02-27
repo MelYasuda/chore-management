@@ -16,28 +16,55 @@ class Create extends React.Component {
     this.state = {
       isLoading: true,
       usernames: null,
+      choreListId: null
     }
   }
 
   componentDidMount() {
-    const { uid } = firebase.auth().currentUser;
-    firebase.database().ref(`users/${uid}/username`).once('value', snapshot =>{
-      
-      // dropdown value has to be this shape
-      // [{
-      //   value: username
-      // }]
-      const dropdownUsernames = []
-      const dropdownUsernameValue = {}
-      const username = snapshot.val()
-      dropdownUsernameValue['value'] = username
-      dropdownUsernames.push(dropdownUsernameValue)
-      this.setState({
-        isLoading: false,
-        dropdownUsernames: dropdownUsernames
+    let choreListId;
+    const getUsersChoreListId = () => {
+      return new Promise ((resolve, reject) => {
+        const currentUid = firebase.auth().currentUser.uid;
+        firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+          choreListId = snapshot.val();
+          console.log(choreListId)
+          resolve()
+        })
       })
+    }
 
+    const getUserIdsWithChoreListId = () => {
+      return new Promise ((resolve, reject) => {
+      firebase.database().ref('/').child('users').orderByChild('choreLists').equalTo(choreListId).on('value', snapshot => {
+        const userIdsWithChoreListId = snapshot.val()
+        console.log(userIdsWithChoreListId)
+       resolve(userIdsWithChoreListId)
+      })
     })
+    }
+
+    const setDropdownUsernames = (userIdsWithChoreListId) => {
+
+        // dropdown value has to be this shape
+        // [{value: username}]
+        const dropdownUsernames = []
+
+        for(const userId in userIdsWithChoreListId){
+          const username = userIdsWithChoreListId[userId].username
+          console.log(username)
+          const dropdownUsernameValue = {}
+          dropdownUsernameValue['value'] = username
+          dropdownUsernames.push(dropdownUsernameValue)
+        }
+        this.setState({
+          isLoading: false,
+          dropdownUsernames: dropdownUsernames,
+          choreListId: choreListId
+        })
+    }
+
+    getUsersChoreListId().then(getUserIdsWithChoreListId).then(setDropdownUsernames)
+
 }
 
   _handleSubmit = (values, {resetForm}) => {
@@ -55,19 +82,19 @@ class Create extends React.Component {
     dispatch(action);
     // store new chore in database and do other things if it succees
 
-    const getUsersChoreListId = () => {
-      return new Promise ((resolve, reject) => {
-        const currentUid = firebase.auth().currentUser.uid;
-        firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
-          const choreListId = snapshot.val();
-          console.log(choreListId)
-          resolve(choreListId)
-        })
-      })
-    }
+    // const getUsersChoreListId = () => {
+    //   return new Promise ((resolve, reject) => {
+    //     const currentUid = firebase.auth().currentUser.uid;
+    //     firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
+    //       const choreListId = snapshot.val();
+    //       console.log(choreListId)
+    //       resolve(choreListId)
+    //     })
+    //   })
+    // }
 
-    const addNewChore = (choreListId) => {
-        firebase.database().ref(`choreLists/${choreListId}/chores`).push({
+    const addNewChore = () => {
+        firebase.database().ref(`choreLists/${this.state.choreListId}/chores`).push({
           desc,
           assignedName,
           priority,
@@ -83,7 +110,7 @@ class Create extends React.Component {
       })
     }
 
-    getUsersChoreListId().then(addNewChore)
+    addNewChore()
 
   };
 
