@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import FirebaseConfig from '../../../constants/FirebaseConfig.js';
 import * as firebase from 'firebase';
 import { StackActions, NavigationActions } from 'react-navigation';
 

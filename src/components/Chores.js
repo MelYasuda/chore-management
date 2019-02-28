@@ -7,9 +7,11 @@ import Create from './CreateNew/CreateForm.js';
 import User from './User.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chore from './Chore';
-import { NavigationEvents, StackActions, NavigationActions } from "react-navigation";
+import { NavigationEvents, StackActions, NavigationActions, createDrawerNavigator, createStackNavigator } from "react-navigation";
 import FirebaseConfig from '../../constants/FirebaseConfig.js';
 import * as firebase from 'firebase';
+import ShareChoreList from './SideMenu/ShareChoreList';
+import LoginPage from './Auth/LoginPage'
 
 firebase.initializeApp(FirebaseConfig);
 
@@ -282,4 +284,43 @@ TabNavigator.navigationOptions = ({ navigation }) => {
   };
 };
 
-export default TabNavigator;
+const DrawerNavigator = createDrawerNavigator({
+  Chores: { screen: TabNavigator },
+  Share: { screen: ShareChoreList },
+});
+
+DrawerNavigator.navigationOptions = ({ navigation }) => {
+  const { routeName } = navigation.state.routes[navigation.state.index];
+
+  const headerTitle = routeName;
+  const headerStyle = {
+    backgroundColor: '#4f63d6',
+  }
+  const headerTintColor = '#fff'
+  const headerTitleStyle = {
+    fontWeight: 'bold',
+    fontSize: 25,
+  }
+
+  return {
+    headerTitle,
+    headerStyle,
+    headerTintColor,
+    headerTitleStyle
+  }
+  // drawer: {
+  //   icon: () => (
+  //     <Icon name={"ios-arrow-down"} size={30}
+  //     />
+  //   )}
+}
+
+const DrawerStack = createStackNavigator(
+  {
+    DrawerNavigator:{
+      screen: DrawerNavigator,
+    }
+  }
+);
+
+export default DrawerStack;
