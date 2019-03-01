@@ -319,8 +319,9 @@ const DrawerStack = createStackNavigator(
   {
     DrawerNavigator:{
       screen: DrawerNavigator,
-    }
+    },
   }
+  
 );
 
 export default DrawerStack;

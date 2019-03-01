@@ -11,6 +11,8 @@ import LoginPage from './src/components/Auth/LoginPage.js';
 import SignupPage from './src/components/Auth/SignupPage.js';
 import ForgotPassword from './src/components/Auth/ForgotPassword.js';
 import User from './src/components/User.js';
+import NavigationService from './NavigationService';
+
 
 const store = configureStore();
 
@@ -26,7 +28,10 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <MainAppContainer />
+          <MainAppContainer
+          ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);}}
+          />
         </View>
       </Provider>
     );
@@ -41,14 +46,46 @@ const styles = StyleSheet.create({
 });
 
 const MainAppNavigator = createStackNavigator(
+  
   {
-    Chores: Chores,
+    Chores:  {
+      screen: Chores,
+      navigationOptions: {
+          header: null // Will hide header for HomePage
+      }
+  },
     Details: Details,
     Loading: Loading,
-    SignupPage: SignupPage,
-    LoginPage: LoginPage,
+    SignupPage: {
+      screen: SignupPage,
+      navigationOptions: {
+          headerTitle: 'Sing Up',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 25,
+          },
+          headerStyle: {
+            backgroundColor: '#4f63d6',
+          },
+          headerTintColor: '#fff'
+      }
+  },
+    LoginPage: {
+      screen: LoginPage,
+      navigationOptions: {
+        headerTitle: 'Log In',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 25,
+        },
+        headerStyle: {
+          backgroundColor: '#4f63d6',
+        },
+        headerTintColor: '#fff'
+      }
+  },
     ForgotPassword: ForgotPassword,
-    User: User
+    User: User,
   },
   {
     initialRouteName: "Loading"
