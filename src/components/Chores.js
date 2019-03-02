@@ -264,6 +264,10 @@ const TabNavigator = createMaterialBottomTabNavigator({
 );
 
 TabNavigator.navigationOptions = ({ navigation }) => {
+  const state = navigation.state;
+
+  console.log(state)
+
   const { routeName } = navigation.state.routes[navigation.state.index];
 
   const headerTitle = routeName;
@@ -290,7 +294,16 @@ const DrawerNavigator = createDrawerNavigator({
 });
 
 DrawerNavigator.navigationOptions = ({ navigation }) => {
-  const { routeName } = navigation.state.routes[navigation.state.index];
+  const route = navigation.state.routes[navigation.state.index]
+
+  console.log(route)
+  let routeName;
+  if(route.index){
+    routeName = route.routes[route.index].routeName
+  } else {
+    routeName = route.routeName
+  }
+  // let routeName = route.routes[route.index].routeName ? route.routes[route.index].routeName : route.routeName
 
   const headerTitle = routeName;
   const headerStyle = {
