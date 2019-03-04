@@ -27,7 +27,6 @@ class Create extends React.Component {
         const currentUid = firebase.auth().currentUser.uid;
         firebase.database().ref(`users/${currentUid}/`).child('choreLists').on('value', snapshot => {
           choreListId = snapshot.val();
-          console.log(choreListId)
           resolve()
         })
       })
@@ -37,7 +36,6 @@ class Create extends React.Component {
       return new Promise ((resolve, reject) => {
       firebase.database().ref('/').child('users').orderByChild('choreLists').equalTo(choreListId).on('value', snapshot => {
         const userIdsWithChoreListId = snapshot.val()
-        console.log(userIdsWithChoreListId)
        resolve(userIdsWithChoreListId)
       })
     })
@@ -51,7 +49,6 @@ class Create extends React.Component {
 
         for(const userId in userIdsWithChoreListId){
           const username = userIdsWithChoreListId[userId].username
-          console.log(username)
           const dropdownUsernameValue = {}
           dropdownUsernameValue['value'] = username
           dropdownUsernames.push(dropdownUsernameValue)

@@ -30,7 +30,6 @@ class Chores extends React.Component {
   componentDidMount(){
     let dataArray=[];
   
-    console.log("didmount")
     const getUsersChores = (choreListId) => {
       return new Promise (
         function (resolve, reject) {
@@ -75,9 +74,7 @@ class Chores extends React.Component {
     }
   
     this.getUsersChoreListId().then(getUsersChores).then(dispatchStoresChores).then(setStateChores)
-  
-    console.log('didmount')
-    
+      
   }
 
   getUsersChoreListId = () => {
@@ -86,11 +83,9 @@ class Chores extends React.Component {
       firebase.auth().onAuthStateChanged( user => {
         if(user){
           const currentUid = user.uid;
-          console.log(currentUid)
           firebase.database().ref(`users/${currentUid}/choreLists`).on('value', snapshot => {
             const choreListId = snapshot.val();
             if(choreListId){
-              console.log(choreListId)
               resolve(choreListId)
             }
           })
@@ -266,8 +261,6 @@ const TabNavigator = createMaterialBottomTabNavigator({
 TabNavigator.navigationOptions = ({ navigation }) => {
   const state = navigation.state;
 
-  console.log(state)
-
   const { routeName } = navigation.state.routes[navigation.state.index];
 
   const headerTitle = routeName;
@@ -296,7 +289,6 @@ const DrawerNavigator = createDrawerNavigator({
 DrawerNavigator.navigationOptions = ({ navigation }) => {
   const route = navigation.state.routes[navigation.state.index]
 
-  console.log(route)
   let routeName;
   if(route.index){
     routeName = route.routes[route.index].routeName
