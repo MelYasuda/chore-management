@@ -39,6 +39,9 @@ https://www.youtube.com/watch?v=YicXYbGQbWw
 ## Known Bugs
 TBD
 
+## Note
+* To meplacing Collapsible.js's overflow: 'hidden' with 'scroll'
+
 ## Support and contact details
 * Mel, yasudamel@gmail.com
 
